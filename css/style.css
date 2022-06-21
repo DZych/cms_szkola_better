@@ -1,0 +1,20 @@
+.masthead {
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../assets/img/header_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  };
+
+.main-hr{
+  width:10%;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
