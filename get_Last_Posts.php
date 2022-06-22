@@ -1,7 +1,7 @@
 <?php
 require_once("config.php");
 
-$query = "SELECT * FROM wiadomosci";
+$query = "SELECT * FROM wiadomosci ORDER BY id_wiadomosci DESC LIMIT 4";
 $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
 
 echo '  <div class="container">
