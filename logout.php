@@ -1,0 +1,9 @@
+<?php
+session_start();
+$_SESSION['id']="";
+$_SESSION['imie']="";
+$_SESSION['nazwisko']="";
+$_SESSION['typ_uzytkownika']="";
+session_destroy();
+header("location:login.php");
+?>
