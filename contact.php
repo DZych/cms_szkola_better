@@ -10,6 +10,8 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/contact.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//static.rmt.pl/cache.ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="scripts/contact.js"></script>
     <title></title>
 </head>
 
@@ -95,7 +97,7 @@
                 <div class="contact-form">
 
                     <h3>Formularz kontaktowy:</h3>
-                    <form method="post" action="/send_form.php" id="contact_form">
+                    <form method="post" action="/send_contact.php" id="contact_form">
                         <div><label for="name">Imię i nazwisko</label></div>
                         <div><input type="text" name="name" id="name" class="formField" /></div>
                         <div><label for="phone">Numer telefonu</label></div>
@@ -119,7 +121,7 @@
         <div class="my-4 text-center fw-bold">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2469.8107932239545!2d19.3827829154604!3d51.754783300406594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471a356070f102d3%3A0xa5b42e013fc02ec0!2zS29uc3RhbnR5bm93c2thIDEwNywgOTAtMDAxIMWBw7Nkxbo!5e0!3m2!1spl!2spl!4v1655927554616!5m2!1spl!2spl"
-                width="1200" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                width="1280" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
