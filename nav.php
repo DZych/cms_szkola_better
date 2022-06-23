@@ -16,7 +16,7 @@
                         <a class="nav-link text-dark fw-bold" href="#">Dziennik</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-bold" href="#">O Naszej szkole</a>
+                        <a class="nav-link text-dark fw-bold" href="about.php">O Naszej szkole</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark fw-bold" href="#">Kontakt</a>
