@@ -1,7 +1,7 @@
 <?php
 require_once("config.php");
 
-$query = "SELECT * FROM wiadomosci ORDER BY id_wiadomosci DESC LIMIT 4";
+$query = "SELECT * FROM ".$prefix."_news ORDER BY news_id DESC LIMIT 4";
 $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
 
 echo '  <div class="container">
@@ -10,10 +10,10 @@ echo '  <div class="container">
         ';
 
 while ($wynik = mysqli_fetch_assoc($result)) {
-    $post_id = $wynik['id_wiadomosci'];
-    $post_title = $wynik['tytul'];
-    $post_contet = $wynik['tresc'];
-    $post_image = $wynik['zdjecie'];
+    $post_id = $wynik['news_id'];
+    $post_title = $wynik['title'];
+    $post_contet = $wynik['content'];
+    $post_image = $wynik['image'];
 
     // przycięcie zawartości postu
     $result_content = strlen($post_contet) > 600 ? substr($post_contet,0,600)."..." : $post_contet;

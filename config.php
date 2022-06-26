@@ -5,6 +5,7 @@ $host = "sql11.freesqldatabase.com";
 $db_user = "sql11501306";
 $db_password = "U54TTaM1n2";
 $db_name = "sql11501306";
+$prefix = "";
 
 
  /* Łączenie i wybranie bazy */

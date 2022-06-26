@@ -30,7 +30,7 @@
         <div class="card border-0 shadow rounded-3 my-5" >  
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-light fs-5">Witaj, tutaj możesz się zalogować</h5>
-            <form action="zaloguj.php" method="post">
+            <form action="scripts/php/zaloguj.php" method="post">
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
                 <label for="floatingInput">Adres email</label>
@@ -52,7 +52,7 @@
             </form>
           </div>
         </div>
-        <?php if(isset($_SESSION['blad'])) echo $_SESSION['blad']; ?>
+        <?php if(isset($_SESSION['error'])) echo $_SESSION['error']; ?>
       </div>
     </div>
   </div>

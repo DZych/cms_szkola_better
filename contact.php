@@ -97,7 +97,7 @@
                 <div class="contact-form">
 
                     <h3>Formularz kontaktowy:</h3>
-                    <form method="post" action="/send_contact.php" id="contact_form">
+                    <form method="post" action="scripts/php/send_contact.php" id="contact_form">
                         <div><label for="name">Imię i nazwisko</label></div>
                         <div><input type="text" name="name" id="name" class="formField" /></div>
                         <div><label for="phone">Numer telefonu</label></div>

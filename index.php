@@ -66,7 +66,7 @@
     <!-- Ostatnio opublikowane posty -->
 
     <?php
-    include_once("get_Last_Posts.php");
+    include_once("scripts/php/get_Last_Posts.php");
     ?>
       
 

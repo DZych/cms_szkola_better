@@ -21,15 +21,15 @@
         $id = $_REQUEST['id'];
 
         require_once("config.php");
-        $query = "SELECT * FROM wiadomosci where id_wiadomosci = $id";
+        $query = "SELECT * FROM ".$prefix."_news where news_id = $id";
         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
 
         while ($wynik = mysqli_fetch_assoc($result)) {
-            $post_id = $wynik['id_wiadomosci'];
-            $post_title = $wynik['tytul'];
-            $post_contet = $wynik['tresc'];
-            $post_image = $wynik['zdjecie'];
-            $post_date = $wynik['data_publikacji'];
+            $post_id = $wynik['news_id'];
+            $post_title = $wynik['title'];
+            $post_contet = $wynik['content'];
+            $post_image = $wynik['image'];
+            $post_date = $wynik['date'];
 
             echo'
                 <div class="container mt-5">
