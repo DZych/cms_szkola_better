@@ -40,7 +40,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="grades.php" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-edit"></i>
             <span>Oceny</span>
         </a>
