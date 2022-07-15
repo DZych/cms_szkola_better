@@ -35,5 +35,6 @@ while ($wynik = mysqli_fetch_assoc($result)) {
     ';
   }
 
- echo "</div>" 
+ echo "</div>";
+ mysqli_close($link); 
 ?>

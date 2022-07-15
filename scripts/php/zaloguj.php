@@ -34,6 +34,7 @@
         
         unset($_SESSION['error']);
         header("location:../../dashboard/index.php");
+        mysqli_close($link);
         }
         else{
             $_SESSION['zalogowany'] = false;
@@ -41,6 +42,7 @@
             Użytkownik nie istnieje!
             </div>';
           header("location:../../login.php");
+          mysqli_close($link);
         }
     }
     else{
@@ -49,6 +51,7 @@
         Użytkownik nie istnieje!
         </div>';
       header("location:../../login.php");
+      mysqli_close($link);
     }
       
     function set_type_user($table_name, $value_name){

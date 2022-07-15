@@ -35,7 +35,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <?php include_once("menu.php") ?>
+        <?php include_once("includes/navbar.php") ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

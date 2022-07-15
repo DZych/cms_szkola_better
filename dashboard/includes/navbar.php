@@ -23,13 +23,13 @@
 
                 <?php
                 if ($_SESSION['is_admin'] == true) {
-                    echo "<a class='collapse-item' href='buttons.html'>Zarządzaj Planem Lekcji</a>";
+                    echo "<a class='collapse-item' href='adminTimetable.php'>Zarządzaj Planem Lekcji</a>";
                 }
                 if ($_SESSION['is_teacher'] == true) {
-                    echo "<a class='collapse-item' href='buttons.html'>Moje lekcje</a>";
+                    echo "<a class='collapse-item' href='teacherTimetable.php'>Moje lekcje</a>";
                 }
                 if ($_SESSION['is_student'] == true) {
-                    echo "<a class='collapse-item' href='buttons.html'>Plan lekcji</a>";
+                    echo "<a class='collapse-item' href='studentTimetable.php'>Plan lekcji</a>";
                 }
                 ?>
 
