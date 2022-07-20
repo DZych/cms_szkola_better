@@ -68,22 +68,25 @@
                             $class_id = $wynik['class_id'];
                         }
 
-                        $query = "SELECT MAX(lesson_number) as lessons_in_week FROM ".$prefix."_timetable WHERE ".$prefix."class_id = ".$class_id.";";
+                        $query = "SELECT MAX(lesson_number) as lessons_in_week FROM _timetable, _class_lessons 
+                                    WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
+                                    and _class_lessons.class_id = ".$class_id.";";
                         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                         while ($wynik = mysqli_fetch_assoc($result)) {
                             $max_lessons_in_week = $wynik['lessons_in_week'];
                         }
 
 
-                        $query = "SELECT _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
-                                    FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users 
-                                    WHERE _timetable.class_id = _classes.class_id 
-                                    and _teacher_subject.teacher_subject_id = _timetable.teacher_subject_id 
-                                    and _teacher_subject.teacher_id = _teachers.teacher_id
-                                    and _teachers.user_id = _users.user_id
-                                    and _teacher_subject.subject_id = _subjects.subject_id 
-                                    and _classes.class_id = ".$class_id."
-                                    ORDER BY _timetable.lesson_number";
+                        $query = "SELECT _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
+                                        FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons
+                                        WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
+                                        and _class_lessons.class_id = _classes.class_id
+                                        and _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
+                                        and _teacher_subject.teacher_id = _teachers.teacher_id
+                                        and _teacher_subject.subject_id = _subjects.subject_id
+                                        and _teachers.user_id = _users.user_id
+                                        and _classes.class_id = ".$class_id."
+                                        ORDER BY _timetable.lesson_number";
                         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                         $lessons = array();
                         $days = array();
@@ -137,8 +140,8 @@
                                             for($j=1; $j<6; $j++){
                                                 
                                                 for($k=0; $k<$number_of_lessons; $k++){
-                                                    $last_used_j;
-                                                    $last_used_i;
+                                                    $last_used_j = null;
+                                                    $last_used_i = null;
                                                     if($j == $days[$k] && $i == $lessons[$k]){
                                                         echo '<td><strong>'.$subjects[$k].'</strong> </br>'.$first_names[$k].' '.$last_names[$k].'</td>';
                                                         $added_lessons++;

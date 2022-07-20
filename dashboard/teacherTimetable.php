@@ -57,13 +57,14 @@
 
                         require_once("../config.php");
 
-                        $query = "SELECT MAX(lesson_number) as lessons_in_week FROM _timetable, _teacher_subject, _teachers, _users, _classes, _subjects
-                        WHERE _timetable.class_id = _classes.class_id 
-                        and _teacher_subject.teacher_subject_id = _timetable.teacher_subject_id 
-                        and _teacher_subject.teacher_id = _teachers.teacher_id
-                        and _teachers.user_id = _users.user_id
-                        and _teacher_subject.subject_id = _subjects.subject_id 
-                        and _users.user_id = ".$_SESSION['user_id'].";";
+                        $query = "SELECT MAX(lesson_number) as lessons_in_week FROM _timetable, _teacher_subject, _teachers, _users, _classes, _subjects, _class_lessons
+                                WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
+                                and _class_lessons.class_id = _classes.class_id
+                                and _teacher_subject.teacher_subject_id = _class_lessons.teacher_subject_id
+                                and _teacher_subject.teacher_id = _teachers.teacher_id
+                                and _teachers.user_id = _users.user_id
+                                and _teacher_subject.subject_id = _subjects.subject_id 
+                                and _users.user_id = ".$_SESSION['user_id'].";";
                         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                         while ($wynik = mysqli_fetch_assoc($result)) {
                             $max_lessons_in_week = $wynik['lessons_in_week'];
@@ -71,14 +72,15 @@
 
 
                         $query = "SELECT _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name, _users.user_id 
-                        FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users 
-                        WHERE _timetable.class_id = _classes.class_id 
-                        and _teacher_subject.teacher_subject_id = _timetable.teacher_subject_id 
-                        and _teacher_subject.teacher_id = _teachers.teacher_id
-                        and _teachers.user_id = _users.user_id
-                        and _teacher_subject.subject_id = _subjects.subject_id 
-                        and _users.user_id = ".$_SESSION['user_id']."
-                        ORDER BY _timetable.lesson_number";
+                                    FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons 
+                                    WHERE _timetable.class_lesson_id  = _class_lessons.class_lesson_id 
+                                    and _class_lessons.class_id = _classes.class_id
+                                    and _teacher_subject.teacher_subject_id = _class_lessons.teacher_subject_id 
+                                    and _teacher_subject.teacher_id = _teachers.teacher_id
+                                    and _teachers.user_id = _users.user_id
+                                    and _teacher_subject.subject_id = _subjects.subject_id 
+                                    and _users.user_id = ".$_SESSION['user_id']."
+                                    ORDER BY _timetable.lesson_number";
                         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                         $lessons = array();
                         $days = array();
@@ -99,7 +101,6 @@
 
 
                         $array_of_hours = array("8:15- 9:00", "9:10- 9:55", "10:05-10:50", "11:00-11:45", "11:55-12:40", "13:00-13:45", "14:05-14:50", "14:55-15:40", "15:45-16:30");
-
 
                         echo '
                         <div class="card shadow mb-4">
@@ -134,8 +135,8 @@
                                             for($j=1; $j<6; $j++){
                                                 
                                                 for($k=0; $k<$number_of_lessons; $k++){
-                                                    $last_used_j;
-                                                    $last_used_i;
+                                                    $last_used_j = null;
+                                                    $last_used_i = null;
                                                     if($j == $days[$k] && $i == $lessons[$k]){
                                                         echo '<td><strong>'.$subjects[$k].'</strong></br>Klasa '.$classes[$k].'</td>';
                                                         $added_lessons++;

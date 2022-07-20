@@ -107,14 +107,15 @@
                                             
 
                                             $query = "SELECT _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
-                                                        FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users 
-                                                        WHERE _timetable.class_id = _classes.class_id 
-                                                        and _teacher_subject.teacher_subject_id = _timetable.teacher_subject_id 
-                                                        and _teacher_subject.teacher_id = _teachers.teacher_id
-                                                        and _teachers.user_id = _users.user_id
-                                                        and _teacher_subject.subject_id = _subjects.subject_id 
-                                                        and _classes.class_id = ".$class_id."
-                                                        ORDER BY _timetable.lesson_number";
+                                                                FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons
+                                                                WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
+                                                                and _class_lessons.class_id = _classes.class_id
+                                                                and _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
+                                                                and _teacher_subject.teacher_id = _teachers.teacher_id
+                                                                and _teacher_subject.subject_id = _subjects.subject_id
+                                                                and _teachers.user_id = _users.user_id
+                                                                and _classes.class_id = ".$class_id."
+                                                                ORDER BY _timetable.lesson_number";
                                             $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                                             $lessons = array();
                                             $days = array();
