@@ -183,24 +183,24 @@
                                                                             $last_used_i = $i;
                                                                         }
                                                                     }
-                                                                    if($i > $last_used_i){
-                                                                        echo '<td style="height: 73px;">
-                                                                        <div id="'.$i."_".$j.'" onClick="sendIDs(this.id)">
-                                                                        <a class="btn btn-block text-center align-items-center" href="#" data-toggle="modal" data-target="#addLesson">
-                                                                        <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400 text-center"></i>
-                                                                    </a>
-                                                                    </div>
-                                                                        </td>';
-                                                                    }
-                                                                    else if($j > $last_used_j){
-                                                                        echo '<td style="height: 73px;">
-                                                                        <div id="'.$i."_".$j.'" onClick="sendIDs(this.id)">
-                                                                        <a class="btn btn-block text-center align-items-center" name="input_'.$i.'_'.$j.'" href="#" data-toggle="modal" data-target="#addLesson">
-                                                                        <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                        if($i > $last_used_i){
+                                                                            echo '<td style="height: 73px;">
+                                                                            <div id="'.$i."_".$j.'" onClick="sendIDs(this.id)">
+                                                                            <a class="btn btn-block text-center align-items-center" href="#" data-toggle="modal" data-target="#addLesson">
+                                                                            <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400 text-center"></i>
                                                                         </a>
                                                                         </div>
-                                                                        </td>';
-                                                                    }   
+                                                                            </td>';
+                                                                        }
+                                                                        else if($j > $last_used_j){
+                                                                            echo '<td style="height: 73px;">
+                                                                            <div id="'.$i."_".$j.'" onClick="sendIDs(this.id)">
+                                                                            <a class="btn btn-block text-center align-items-center" name="input_'.$i.'_'.$j.'" href="#" data-toggle="modal" data-target="#addLesson">
+                                                                            <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                            </a>
+                                                                            </div>
+                                                                            </td>';
+                                                                        } 
                                                                 }
                                                             }
                                                                

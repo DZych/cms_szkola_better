@@ -26,7 +26,7 @@ if(mysqli_num_rows($result) == 1){
 //jesli nie istnieje
 else{
     //to najpierw dodaj taka lekcje dla tej klasy
-    $query = "INSERT INTO `_class_lessons` (`class_lesson_id`, `teacher_subject_id`, `class_id`)
+    $query = "INSERT INTO `_class_lessons` (`teacher_subject_id`, `class_id`)
     VALUES ('".$teacher_subject_id."','".$class_id."');";
     $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");  
 

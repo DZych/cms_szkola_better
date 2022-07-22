@@ -77,7 +77,7 @@
                         }
 
 
-                        $query = "SELECT _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
+                        $query = "SELECT _class_lessons.class_lesson_id, _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
                                         FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons
                                         WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
                                         and _class_lessons.class_id = _classes.class_id
@@ -93,12 +93,14 @@
                         $subjects = array();
                         $number_of_lessons = 0;
                         $lessons_array = array();
+                        $class_lesson_ids = array();
                         while ($wynik = mysqli_fetch_assoc($result)) {
                                 $lessons[$number_of_lessons] = $wynik['lesson_number'];
                                 $days[$number_of_lessons] = $wynik['day'];
                                 $subjects[$number_of_lessons] = $wynik['subject_name'];
                                 $first_names[$number_of_lessons] = $wynik['first_name'];
                                 $last_names[$number_of_lessons] = $wynik['last_name'];
+                                $class_lesson_ids[$number_of_lessons] = $wynik['class_lesson_id'];
                                 //$lessons_array[$number_of_lessons] = array($wynik['lesson_number'],$wynik['day'],$wynik['subject_name']);
                                 $number_of_lessons++;
                         }
@@ -138,17 +140,23 @@
                                             <td class="table-primary text-dark">'.($array_of_hours[$i]).'</td>';
                                             $added_lessons = 0;
                                             for($j=1; $j<6; $j++){
-                                                
+                                                $last_used_j = null;
+                                                $last_used_i = null;   
                                                 for($k=0; $k<$number_of_lessons; $k++){
-                                                    $last_used_j = null;
-                                                    $last_used_i = null;
+
                                                     if($j == $days[$k] && $i == $lessons[$k]){
-                                                        echo '<td><strong>'.$subjects[$k].'</strong> </br>'.$first_names[$k].' '.$last_names[$k].'</td>';
+                                                        echo '<td>
+                                                        <form action="lessonFiles.php" method="post">
+                                                            <button type="submit" name="class_lesson_id" value="'. $class_lesson_ids[$k].'" class="btn btn-link text-left">
+                                                            <strong>'.$subjects[$k].'</strong> 
+                                                            </br>
+                                                            '.$first_names[$k].' '.$last_names[$k].'
+                                                            </button>
+                                                        </form>
+                                                        </td>';
                                                         $added_lessons++;
                                                         $last_used_j = $j;
                                                         $last_used_i = $i;
-                                                    }
-                                                    else if($j != $days[$k] && $i != $lessons[$k]){
                                                     }
                                                 }
 
