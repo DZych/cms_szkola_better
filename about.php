@@ -97,7 +97,7 @@
                 <!-- Team item-->
                 <div class="col-xl-3 col-sm-6 mb-5">
                     <div class="bg-white rounded shadow-sm py-5 px-4"><img src="https://yt3.ggpht.com/ytc/AMLnZu8RiH_2cvg-fPZbiN6sPNxHagjU0EUCB9h9Fe34=s900-c-k-c0x00ffffff-no-rj" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                        <h5 class="mb-0">Michał Wiśniewski</h5><span class="small text-uppercase text-muted">Ulubienieć pani od muzyki został znanym na całą Polskę wokalistą.</span>
+                        <h5 class="mb-0">Michał Wiśniewski</h5><span class="small text-uppercase text-muted">Ulubieniec pani od muzyki został znanym na całą Polskę wokalistą.</span>
 
                     </div>
                 </div>

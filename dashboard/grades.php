@@ -30,8 +30,10 @@ require '../config.php';
             } elseif ($_SESSION['is_teacher']) {
             ?>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Lista uczniów</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Oceny uczniów</h1>
                 </div>
+
+
             <?php
                 include('grades/tableStudents.php');
             }

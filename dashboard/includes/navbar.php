@@ -56,7 +56,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="changeUserInfo.php">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Ustawienia</span></a>
     </li>
