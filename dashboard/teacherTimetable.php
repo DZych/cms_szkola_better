@@ -49,8 +49,14 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Plan Lekcji</h1>
-                    
+                    <?php
+                        if(isset($_GET['forFiles'])){
+                            echo '<h1 class="h3 mb-4 text-gray-800">Wybierz lekcje aby zobaczyć pliki dla niej</h1>';
+                        }
+                        else{
+                            echo '<h1 class="h3 mb-4 text-gray-800">Plan Lekcji</h1>';
+                        }
+                    ?>
 
                     <?php
                     if($_SESSION['is_teacher'] == true){

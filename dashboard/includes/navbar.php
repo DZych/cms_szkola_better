@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-            <img src="../assets/img/logo.png" style="width: 40px;" />
+            <img src="../assets/img/logo.png" style="width: 40px;"/>
         </div>
         <div class="sidebar-brand-text mx-1">ZSP 13</div>
     </a>
@@ -15,8 +15,8 @@
     <!-- Nav Item - Zajęcia -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Zajęcia</span>
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Plan Lekcji</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -43,6 +43,26 @@
         <a class="nav-link collapsed" href="grades.php" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-edit"></i>
             <span>Oceny</span>
+        </a>
+    </li>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+
+        <?php
+                if ($_SESSION['is_admin'] == true) {
+                    echo "<a class='nav-link collapsed' href='teacherTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+                    
+                }
+                if ($_SESSION['is_teacher'] == true) {
+                    echo "<a class='nav-link collapsed' href='adminTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+                }
+                if ($_SESSION['is_student'] == true) {
+                    echo "<a class='nav-link collapsed' href='studentTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+                }
+        ?>
+            <i class="fas fa-fw fa-file"></i>
+            <span>Pliki dla zajęć</span>
         </a>
     </li>
 
