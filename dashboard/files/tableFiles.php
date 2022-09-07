@@ -49,6 +49,7 @@
                             echo '
                             </tbody>
                           </table>
+                          </div>
                             ';
                         } else {
                             echo "<h5><strong> Brak plików </strong></h5>";
@@ -105,6 +106,7 @@
                                                     <button class="btn btn-primary btn-sm" type="submit" name="upload">Dodaj nowy plik</button>
                                                 </form>
                                             </div>
+                                        </div>
                                         </div>
                           ';
                         } else {

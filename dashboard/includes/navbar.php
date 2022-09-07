@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon">
             <img src="../assets/img/logo.png" style="width: 40px;"/>
         </div>
@@ -66,12 +66,19 @@
         </a>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
+    <!-- Nav Item - Wiadomości -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
             <i class="fas fa-fw fa-comment"></i>
             <span>Wiadomości</span>
         </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+            <a class='collapse-item' href='newMessage.php'>Nowa wiadomość</a>
+            <a class='collapse-item' href='inboxMessage.php'>Odebrane</a>
+            <a class='collapse-item' href='sentMessage.php'>Wysłane</a>
+            </div>
+        </div>
     </li>
 
     <!-- Nav Item - Charts -->

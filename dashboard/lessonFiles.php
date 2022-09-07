@@ -44,7 +44,7 @@ require '../config.php';
                 <h1 class="h3 mb-0 text-gray-800">'.$plik['name'].' - Klasa '.$plik['class_name'].'</h1>
                 ';
             }
-
+            echo '</div>';
             $header_was_set = true;
         }
 
@@ -65,13 +65,12 @@ require '../config.php';
                     <h1 class="h3 mb-0 text-gray-800">'.$plik['name'].' - '.$plik['first_name'].' '.$plik['last_name'].'</h1>
                     ';
                 }
+                echo '</div>';
             }          
         }
-        
         ?>
 
-       
-        </div>
+
             <!-- Page Heading -->
 
             <?php
@@ -80,11 +79,9 @@ require '../config.php';
 
         </div>
         <!-- End of Main Content -->
-
-
-
     </div>
     <!-- End of Page Wrapper -->
+
 
     <?php
     include('includes/scripts.php');

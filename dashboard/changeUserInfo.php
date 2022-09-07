@@ -23,11 +23,35 @@ include("includes/navbar.php");
                         <div class="card-header">Zdjęcie profilowe</div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                            <?php
+
+require_once("../config.php");
+
+$query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_SESSION['user_id'] . "";
+$result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+if (mysqli_num_rows($result) == 1) {
+    $wiersz = mysqli_fetch_assoc($result);
+
+    echo '<img class="img-fluid rounded" src="data:image/jpeg;base64,'.base64_encode($wiersz['avatar']).'" alt="..." />';
+}
+
+
+
+
+
+                            ?>
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                             <!-- Profile picture upload button-->
-                            <button class="btn btn-primary" type="button">Upload new image</button>
+
+                            <form action='aktualizacja.php' method="POST" enctype="multipart/form-data">
+                                <input type="file" name="image" />
+                                </br>
+                                </br>
+                                <button class="btn btn-primary btn-sm" type="submit" name="submit">Dodaj nowy plik</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -36,7 +60,7 @@ include("includes/navbar.php");
                     <div class="card mb-4">
                         <div class="card-header">Twoje dane</div>
                         <div class="card-body">
-                            <form>
+                            <form method="POST" action="aktualizacja.php">
 
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
@@ -51,7 +75,7 @@ include("includes/navbar.php");
                                         <input class="form-control" id="inputLastName" type="text" placeholder="Wprowadź swoję nazwisko" value=<?php echo $_SESSION["last_name"] ?>>
                                     </div>
                                 </div>
-                                <!-- Form Row        -->
+                                <!-- Form Row  -->
                                 <div class="row gx-3 mb-3">
 
                                     <div class="col-md-6">
@@ -65,10 +89,31 @@ include("includes/navbar.php");
                                     </div>
                                 </div>
                                 <!-- Form Group (email address)-->
-                                <div class="mb-3">
+
+                                <?php
+                                require_once("../config.php");
+
+                                $query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_SESSION['user_id'] . "";
+                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+                                if (mysqli_num_rows($result) == 1) {
+                                    $wiersz = mysqli_fetch_assoc($result);
+
+                                    echo '
+                                    <div class="mb-3">
                                     <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                    <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com">
-                                </div>
+                                    <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="' . $wiersz['email'] . '" name="Email">
+                                    </div>
+                                    ';
+                                }
+
+                                ?>
+
+
+
+
+
+
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (phone number)-->
@@ -83,7 +128,7 @@ include("includes/navbar.php");
                                     </div>
                                 </div>
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" type="button">Zapisz zmiany</button>
+                                <button class="btn btn-primary" type="submit">Zapisz zmiany</button>
                             </form>
                         </div>
                     </div>
