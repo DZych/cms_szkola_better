@@ -36,15 +36,22 @@ require("../config.php");
                         <!-- Odbiorca Wiadomości -->
                         <label for="text" class="col-form-label">Odbiorca wiadomości</label>
                         <select id="Selector_Class" class="form-control mb-2" name="receiver">
-                            <option value="none"  disabled hidden>Wybierz odbiorcę</option>
+                            <option value="none" <?php if (!isset($_SESSION['receiver'])) {
+                                                        echo ' selected ';
+                                                    }  ?> disabled hidden>Wybierz odbiorcę</option>
                             <!-- Załaduj wszystkich dostępnych użytkowników -->
                             <?php
                             $query = "SELECT * FROM " . $prefix . "_users;";
                             $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                             while ($wynik = mysqli_fetch_assoc($result)) {
-                                    echo '<option value="' . $wynik['user_id'] . '"';
-                                    if($_SESSION['receiver'] == $wynik['user_id']){echo ' selected ';}
-                                    echo '>' . $wynik['first_name'] . ' ' . $wynik['last_name'] . '</option>';
+                                echo '<option value="' . $wynik['user_id'] . '"';
+                                if (isset($_SESSION['receiver'])) {
+                                    if ($_SESSION['receiver'] == $wynik['user_id']) {
+                                        echo ' selected ';
+                                        unset($_SESSION['receiver']);
+                                    }
+                                }
+                                echo '>' . $wynik['first_name'] . ' ' . $wynik['last_name'] . '</option>';
                             }
                             ?>
                         </select>

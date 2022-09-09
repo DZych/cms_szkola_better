@@ -69,7 +69,7 @@ require("../config.php");
                                     <td style="font-weight:bold">' . $wiadomosc['subject'] . '</td>
                                 </tr>
                                 <tr>
-                                    <td>Odbiorca: </td>
+                                    <td>Nadawca: </td>
                                     <td style="font-weight:bold"> ' . $user['first_name'] . ' ' . $user['last_name'] . '</td>
                                     <td width="11%">' . $wiadomosc['date'] . '</td>
                                 </tr>
@@ -82,6 +82,7 @@ require("../config.php");
                             <input name="content" value="'.$wiadomosc['content'].'" type="hidden">
                             <input name="subject" value="'.$wiadomosc['subject'].'" type="hidden">
                             <input name="date" value="'.$wiadomosc['date'].'" type="hidden">
+                            <input name="receiver_id" value="'.$wiadomosc['sender_id'].'" type="hidden">
                             <input name="sender" value="' . $user['first_name'] . ' ' . $user['last_name'] .'" type="hidden">
                             <input class="btn btn-success" type="submit" name="reply" value="Odpowiedz">
                             </form>
