@@ -1,7 +1,7 @@
 <?php
 include("includes/header.php");
 include("includes/navbar.php");
-require '../config.php';
+require ('../config.php');
 ?>
 
 <!-- Content Wrapper -->

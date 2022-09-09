@@ -1,8 +1,16 @@
 <?php
 include("includes/header.php");
 include("includes/navbar.php");
-require("../config.php")
+require("../config.php");
 ?>
+
+<script src="https://cdn.tiny.cloud/1/fjioqyviac2n94ft78eu1cmtczs2nlnz7a4xztxgkd81zh6e/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: '#mytextarea'
+    });
+</script>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -23,29 +31,49 @@ require("../config.php")
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <!-- Formularz wysyłania nowej wiadomości -->
-                    <form action="" method="post">
+                    <form action="messages/sendNewMessage.php" method="POST">
 
                         <!-- Odbiorca Wiadomości -->
                         <label for="text" class="col-form-label">Odbiorca wiadomości</label>
                         <select id="Selector_Class" class="form-control mb-2" name="receiver">
-                            <option value="none" selected disabled hidden>Wybierz odbiorcę</option>
+                            <option value="none"  disabled hidden>Wybierz odbiorcę</option>
+                            <!-- Załaduj wszystkich dostępnych użytkowników -->
                             <?php
-                            $query = "SELECT * FROM _users;";
+                            $query = "SELECT * FROM " . $prefix . "_users;";
                             $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                             while ($wynik = mysqli_fetch_assoc($result)) {
-                                echo '<option value="' . $wynik['user_id'] . '">' . $wynik['first_name'] . ' ' . $wynik['last_name'] . '</option>';
+                                    echo '<option value="' . $wynik['user_id'] . '"';
+                                    if($_SESSION['receiver'] == $wynik['user_id']){echo ' selected ';}
+                                    echo '>' . $wynik['first_name'] . ' ' . $wynik['last_name'] . '</option>';
                             }
                             ?>
                         </select>
 
+                        <!-- Temat wiadomości -->
+                        <label for="text" class="col-form-label">Temat</label>
+                        <input type="text" class="form-control" name="subject" lang="pl" value="<?php echo isset($_SESSION['subject']) ? $_SESSION['subject'] : ''; ?>">
                         <!-- Treść wiadomości -->
                         <label for="text" class="col-form-label">Treść wiadomości</label>
-                        <textarea name="messageText" class="form-control mb-2" style="height: 200px;">
-                        </textarea>
+                        <textarea id="mytextarea" name="content" class="form-control mb-2" lang="pl" style="height: 400px;"><?php echo isset($_SESSION['content']) ? $_SESSION['content'] : ''; ?></textarea>
                         <!-- Przycisk wysłania wiadomości -->
-                        <input class="btn btn-primary text-center" type="submit" name="showTableBtn" value="Wyślij wiadomość" />
-                    </form>
+                        <input class="btn btn-primary text-center mt-3" type="submit" name="submit" value="Wyślij wiadomość" />
 
+                    </form>
+                    <!-- Wyświetlanie błędu -->
+                    <?php if (isset($_SESSION['message_error'])) {
+                        echo $_SESSION['message_error'];
+                        unset($_SESSION['message_error']);
+                    }
+
+                    // Czyszczenie danych w sesji
+                    if (isset($_SESSION['subject'])) {
+                        $_SESSION['subject'] = "";
+                    }
+                    if (isset($_SESSION['content'])) {
+                        $_SESSION['content'] = "";
+                    }
+
+                    ?>
                 </div>
             </div>
         </div>

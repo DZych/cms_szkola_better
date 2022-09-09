@@ -181,7 +181,7 @@ if (!isset($_SESSION['zalogowany'])) {
                                                                             <div id="' . $timetable_id[$k] . '" onClick="sendTimetableID(this.id)">
                                                                             <strong>' . $subjects[$k] . '</strong> 
                                                                             <a class="btn float-right" href="#" data-toggle="modal" data-target="#removeLesson">
-                                                                                <i class="fa fa-trash fa-sm fa-fw mr-2 "></i>
+                                                                                <i class="fa fa-trash fa-sm fa-fw"></i>
                                                                             </a>
                                                                             </br>
                                                                             ' . $first_names[$k] . ' ' . $last_names[$k] . '
@@ -196,7 +196,7 @@ if (!isset($_SESSION['zalogowany'])) {
                                                 echo '<td style="height: 73px;">
                                                                             <div id="' . $i . "_" . $j . '" onClick="sendIDs(this.id)">
                                                                             <a class="btn btn-block text-center align-items-center" href="#" data-toggle="modal" data-target="#addLesson">
-                                                                            <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400 text-center"></i>
+                                                                            <i class="fas fa-plus fa-sm fa-fw text-gray-400 text-center"></i>
                                                                         </a>
                                                                         </div>
                                                                             </td>';
@@ -204,7 +204,7 @@ if (!isset($_SESSION['zalogowany'])) {
                                                 echo '<td style="height: 73px;">
                                                                             <div id="' . $i . "_" . $j . '" onClick="sendIDs(this.id)">
                                                                             <a class="btn btn-block text-center align-items-center" name="input_' . $i . '_' . $j . '" href="#" data-toggle="modal" data-target="#addLesson">
-                                                                            <i class="fas fa-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                            <i class="fas fa-plus fa-sm fa-fw text-gray-400"></i>
                                                                             </a>
                                                                             </div>
                                                                             </td>';
