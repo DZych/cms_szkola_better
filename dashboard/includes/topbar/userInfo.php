@@ -1,10 +1,23 @@
 <div class="topbar-divider d-none d-sm-block"></div>
 <!-- Nav Item - User Information -->
+<?php
+
+require_once("../config.php");
+
+$query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_SESSION['user_id'] . "";
+$result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+if (mysqli_num_rows($result) == 1) {
+    $wiersz = mysqli_fetch_assoc($result);
+
+echo '
 <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name'] ?></span>
-        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-    </a>
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">'. $wiersz['first_name'] . " " . $wiersz['last_name'].'</span>
+        <img class="img-profile rounded-circle" src="data:image/jpeg;base64,' . base64_encode($wiersz['avatar']) . '" alt="">
+    </a>';
+}
+    ?>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">
