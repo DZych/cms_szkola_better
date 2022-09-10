@@ -6,7 +6,7 @@ if (!isset($_SESSION['zalogowany'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
 

@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon">
-            <img src="../assets/img/logo.png" style="width: 40px;"/>
+            <img src="../assets/img/logo.png" style="width: 40px;" />
         </div>
         <div class="sidebar-brand-text mx-1">ZSP 13</div>
     </a>
@@ -46,25 +46,25 @@
         </a>
     </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- <li class="nav-item">
 
         <?php
-                if ($_SESSION['is_admin'] == true) {
-                    echo "<a class='nav-link collapsed' href='teacherTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
-                    
-                }
-                if ($_SESSION['is_teacher'] == true) {
-                    echo "<a class='nav-link collapsed' href='adminTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
-                }
-                if ($_SESSION['is_student'] == true) {
-                    echo "<a class='nav-link collapsed' href='studentTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
-                }
+        // if ($_SESSION['is_admin'] == true) {
+        //     echo "<a class='nav-link collapsed' href='teacherTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+
+        // }
+        // if ($_SESSION['is_teacher'] == true) {
+        //     echo "<a class='nav-link collapsed' href='adminTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+        // }
+        // if ($_SESSION['is_student'] == true) {
+        //     echo "<a class='nav-link collapsed' href='studentTimetable.php?forFiles=1' aria-expanded='true' aria-controls='collapseTwo'>";
+        // }
         ?>
             <i class="fas fa-fw fa-file"></i>
             <span>Pliki dla zajęć</span>
         </a>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Wiadomości -->
     <li class="nav-item">
@@ -74,9 +74,9 @@
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-            <a class='collapse-item' href='newMessage.php'>Nowa wiadomość</a>
-            <a class='collapse-item' href='inboxMessage.php'>Odebrane</a>
-            <a class='collapse-item' href='sentMessage.php'>Wysłane</a>
+                <a class='collapse-item' href='newMessage.php'>Nowa wiadomość</a>
+                <a class='collapse-item' href='inboxMessage.php'>Odebrane</a>
+                <a class='collapse-item' href='sentMessage.php'>Wysłane</a>
             </div>
         </div>
     </li>
@@ -88,12 +88,20 @@
             <span>Ustawienia</span></a>
     </li>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Użytkownicy</span></a>
-    </li>
+    <?php
+    if ($_SESSION['is_admin'] == true) {
+        echo '
+        <!-- Nav Item - Users -->
+        <li class="nav-item">
+            <a class="nav-link" href="usersManagement.php">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Użytkownicy</span></a>
+        </li>
+        ';
+    }
+    ?>
+
+
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

@@ -25,8 +25,9 @@
          </li>
 
          <?php
-            include('alerts.php');
-            include('messages.php');
+            // Na razie wycięte - w przyszłości można dodać obsługę powiadomień itd.
+            // include('alerts.php');
+            // include('messages.php');
             include('userInfo.php');
             ?>
      </ul>
