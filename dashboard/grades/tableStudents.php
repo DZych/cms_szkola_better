@@ -33,80 +33,101 @@
             </select>
             <input class="btn btn-primary text-center mt-1 mb-3" type="submit" name="showTableBtn" value="Wyświetl oceny uczniów" />
         </form>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <?php
+                if (isset($_POST['AddGrade'])) {
+                    include("scripts/php/addGrade.php");
+                }
+                if (isset($_POST['showTableBtn'])) {
+                    if (isset($_POST["selected_class"]) & isset($_POST["selected_subject"])) {
 
-        <?php
-        if (isset($_POST['AddGrade'])) {
-            include("scripts/php/addGrade.php");
-        }
-        if (isset($_POST['showTableBtn'])) {
-            if (isset($_POST["selected_class"]) & isset($_POST["selected_subject"])) {
+                        $_SESSION['last_selected_class_id'] = $_POST["selected_class"];
+                        $class_id = $_POST["selected_class"];
+                        $_SESSION['last_selected_subject_id'] = $_POST["selected_subject"];
+                        $subject_id = $_POST["selected_subject"];
 
-                $_SESSION['last_selected_class_id'] = $_POST["selected_class"];
-                $class_id = $_POST["selected_class"];
-                $_SESSION['last_selected_subject_id'] = $_POST["selected_subject"];
-                $subject_id = $_POST["selected_subject"];
-
-        ?>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Imię</th>
-                                <th>Nazwisko</th>
-                                <th>Klasa</th>
-                                <th>Dodaj ocenę</th>
-                                <th>Wyświetl oceny</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <?php
-                            $query = "SELECT _students.student_id, _users.first_name, _users.last_name, _classes.name 
+                        $query = "SELECT _students.student_id, _users.first_name, _users.last_name, _classes.name, COUNT(_grades.id_student) as ilosc 
                         FROM _users 
                         INNER JOIN _students ON _users.user_id = _students.user_id 
                         INNER JOIN _student_class ON _student_class.student_id = _students.student_id 
                         INNER JOIN _classes ON _student_class.class_id = _classes.class_id 
                         LEFT JOIN _grades ON _students.student_id = _grades.id_student
-                        WHERE _classes.class_id = " . $class_id . " AND _grades.subject_id = " . $subject_id . "";
-                            $result = mysqli_query($link, $query);
-                            $queryGrades = "";
+                        WHERE _classes.class_id = " . $class_id . " ";
+                        $result = mysqli_query($link, $query);
 
 
-                            if (mysqli_num_rows($result) > 0) {
-                                foreach ($result as $student) {
-                            ?>
+                        if (mysqli_num_rows($result) > 0) {
+                ?><thead>
+                                <tr>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Klasa</th>
+                                    <th>Dodaj ocenę</th>
+                                    <th>Wyświetl oceny</th>
 
-                                    <tr>
-                                        <td><?= $student['first_name'] ?></td>
-                                        <td><?= $student['last_name'] ?></td>
-                                        <td><?= $student['name'] ?></td>
-                                        <td>
-                                            <div id=<?= $student['student_id'] ?> title='<?= $student['first_name'] ?> <?= $student['last_name'] ?>' onClick="SendStudentID(this.id, this.title)">
-                                                <a name="add_grade_btn" class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#addGrade">Dodaj</a>
-                                            </div>
-                                        </td>
-                                        <td></td>
+                                </tr>
+                            </thead><?php
+                                    foreach ($result as $student) {
+                                        if (isset($student['student_id'])) {
+                                    ?>
 
-                                    </tr>
 
-                            <?php
+
+                                    <tbody>
+                                        <tr>
+                                            <td><?= $student['first_name'] ?></td>
+                                            <td><?= $student['last_name'] ?></td>
+                                            <td><?= $student['name'] ?></td>
+                                            <td>
+                                                <div id=<?= $student['student_id'] ?> title='<?= $student['first_name'] ?> <?= $student['last_name'] ?>' onClick="SendStudentID(this.id, this.title)">
+                                                    <a name="add_grade_btn" class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#addGrade">Dodaj</a>
+                                                </div>
+                                            </td>
+                                            <td><?php
+                                                $id = $student['student_id'];
+                                                $subID = $_COOKIE["subject_id"];
+                                                $grades_list;
+                                                $query = "SELECT `id`, `grade` FROM `_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
+                                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                                while ($wynik = mysqli_fetch_assoc($result)) {
+                                                ?>
+                                                    <div id=<?= $wynik['id'] ?> onClick="" class="float-left ml-1">
+                                                        <a name="show_grade_btn" class="<?php
+                                                                                        if ($wynik['grade'] < 2) {
+                                                                                        ?>btn btn-danger<?php
+                                                                                                    } else {
+                                                                                                        ?>btn btn-success<?php
+                                                                                                                        }
+                                                                                                                            ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynik['grade'] ?></a>
+                                                    </div>
+                                                <?php
+
+                                                    $grades_list[$wynik['id']] = $wynik['grade'];
+                                                }
+
+                                                ?>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+
+
+                <?php
+                                        } else {
+                                            echo "<h5> Brak danych </h5>";
+                                        }
+                                    }
+                                } else {
+                                    echo "<h5> Brak danych </h5>";
                                 }
                             } else {
-                                echo "<h5> Brak danych </h5>";
+                                echo "<h5> Wybierz klasę i przedmiot. </h5>";
                             }
-                            ?>
-
-                        </tbody>
-                    </table>
-
-                </div>
-        <?php
-            } else {
-                echo "<h5> Wybierz klasę i przedmiot. </h5>";
-            }
-        }
-        ?>
+                        }
+                ?>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -128,11 +149,15 @@
                         <label>Rodzaj oceny</label>
                         <select required id="TypeGrade" class="form-control" name="type" onchange="SelectedTypeGrade()">
                             <option value="" selected disabled hidden>Wybierz rodzaj oceny</option>
-                            <option value="sprawdzian">Sprawdzian</option>
-                            <option value="kartkówka">Kartkówka</option>
-                            <option value="ustna">Odpowiedź ustna</option>
-                            <option value="pracadomowa">Praca domowa</option>
-                            <option value="pracanalekcji">Praca na lekcji</option>
+                            <?php
+                            if ($_SESSION['is_teacher'] == true) {
+                                $query = "SELECT * FROM _grades_type;";
+                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                while ($wynik = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $wynik['type_id'] . '">' . $wynik['type'] . '</option>';
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="mb-3 mt-2">
