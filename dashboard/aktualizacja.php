@@ -21,8 +21,18 @@ if (isset($_POST["submit"])) {
             $imgContent = addslashes(file_get_contents($image));
 
             // Insert image content into database 
-            $query = "UPDATE " . $prefix . "_users SET avatar = '" . $imgContent . "' WHERE user_id = '" . $_SESSION['user_id'] . "';";
-            $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+            if(isset($_SESSION['edit_user_id'])){
+                $query = "UPDATE " . $prefix . "_users SET avatar = '" . $imgContent . "' WHERE user_id = '" . $_SESSION['edit_user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                $_POST['edit_user_id'] = $_SESSION['edit_user_id'];
+                unset($_SESSION['edit_user_id']);
+            }
+            else{
+                $query = "UPDATE " . $prefix . "_users SET avatar = '" . $imgContent . "' WHERE user_id = '" . $_SESSION['user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+            }
+
+
             $_SESSION['changepswd']= 1;
 
             if ($insert) {

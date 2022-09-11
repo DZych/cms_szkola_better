@@ -59,19 +59,20 @@ if (isset($_SESSION['changepswd'])) {
 
                             require_once("../config.php");
 
-                            $query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_SESSION['user_id'] . "";
-                            $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                            if(isset($_POST['edit_user_id'])){
+                                $_SESSION['edit_user_id'] = $_POST['edit_user_id'];
+                                $query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_POST['edit_user_id'] . "";
+                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                            }
+                            else{
+                                $query = "SELECT * FROM " . $prefix . "_users WHERE user_id=" . $_SESSION['user_id'] . "";
+                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                            }
 
                             if (mysqli_num_rows($result) == 1) {
                                 $wiersz = mysqli_fetch_assoc($result);
 
                                 echo '<img class="img-fluid rounded" src="data:image/jpeg;base64,' . base64_encode($wiersz['avatar']) . '" alt="..." />
-                            
-
-
-
-
-
                             
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>

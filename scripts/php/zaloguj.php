@@ -15,31 +15,40 @@
     $query = "SELECT * FROM ".$prefix."_users WHERE email='$email'";
     $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
     if(mysqli_num_rows($result)==1){
-        $_SESSION['zalogowany'] = true;
-        
         $wiersz=mysqli_fetch_assoc($result);
-
-        if(password_verify($password, $wiersz['password'])){
-        $_SESSION['user_id']=$wiersz['user_id'];
-        $_SESSION['first_name']=$wiersz['first_name'];
-        $_SESSION['last_name']=$wiersz['last_name'];
-
-        $query = "UPDATE ".$prefix."_users SET `last_login_date` = current_timestamp(), `last_login_ip` = '".$_SERVER['REMOTE_ADDR']."' WHERE `user_id` = '".$wiersz['user_id']."';";
-        mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
-
-
-        set_type_user("admins", "is_admin");
-        set_type_user("teachers", "is_teacher");
-        set_type_user("students", "is_student");
-        
-        unset($_SESSION['error']);
-        header("location:../../dashboard/index.php");
-        mysqli_close($link);
+        if($wiersz['active'] == 1){
+            $_SESSION['zalogowany'] = true;
+    
+            if(password_verify($password, $wiersz['password'])){
+            $_SESSION['user_id']=$wiersz['user_id'];
+            $_SESSION['first_name']=$wiersz['first_name'];
+            $_SESSION['last_name']=$wiersz['last_name'];
+    
+            $query = "UPDATE ".$prefix."_users SET `last_login_date` = current_timestamp(), `last_login_ip` = '".$_SERVER['REMOTE_ADDR']."' WHERE `user_id` = '".$wiersz['user_id']."';";
+            mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
+    
+    
+            set_type_user("admins", "is_admin");
+            set_type_user("teachers", "is_teacher");
+            set_type_user("students", "is_student");
+            
+            unset($_SESSION['error']);
+            header("location:../../dashboard/index.php");
+            mysqli_close($link);
+            }
+            else{
+                $_SESSION['zalogowany'] = false;
+                $_SESSION['error'] = '<div class="alert alert-danger" role="alert">
+                Błędne dane logowania!
+                </div>';
+              header("location:../../login.php");
+              mysqli_close($link);
+            }
         }
         else{
             $_SESSION['zalogowany'] = false;
             $_SESSION['error'] = '<div class="alert alert-danger" role="alert">
-            Użytkownik nie istnieje!
+            Konto zostało dezaktywowane! Skontaktuj się z sekretariatem.
             </div>';
           header("location:../../login.php");
           mysqli_close($link);
@@ -48,7 +57,7 @@
     else{
         $_SESSION['zalogowany'] = false;
         $_SESSION['error'] = '<div class="alert alert-danger" role="alert">
-        Użytkownik nie istnieje!
+        Błędne dane logowania!
         </div>';
       header("location:../../login.php");
       mysqli_close($link);

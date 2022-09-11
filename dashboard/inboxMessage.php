@@ -48,7 +48,7 @@ require("../config.php");
                                     <th style="width: 15%">Nadawca</th>
                                     <th style="width: 65%">Temat</th>
                                     <th>Data</th>
-                                    <th></th>
+                                    <th data-orderable="false"></th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -52,7 +52,7 @@
             </form>
           </div>
         </div>
-        <?php if(isset($_SESSION['error'])) echo $_SESSION['error']; ?>
+        <?php if(isset($_SESSION['error'])) echo $_SESSION['error']; unset($_SESSION['error']);?>
       </div>
     </div>
   </div>

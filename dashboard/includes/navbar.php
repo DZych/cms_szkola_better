@@ -81,13 +81,7 @@
         </div>
     </li>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="changeUserInfo.php">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Ustawienia</span></a>
-    </li>
-
+    
     <?php
     if ($_SESSION['is_admin'] == true) {
         echo '
@@ -100,6 +94,14 @@
         ';
     }
     ?>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="changeUserInfo.php">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Ustawienia</span></a>
+    </li>
+
 
 
 

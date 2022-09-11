@@ -49,7 +49,7 @@ require("../config.php");
                                     <th style="width: 15%">Odbiorca</th>
                                     <th style="width: 65%">Temat</th>
                                     <th>Data</th>
-                                    <th></th>
+                                    <th data-orderable="false"></th>
                                 </tr>
                             </thead>
                             <tbody>
