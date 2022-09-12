@@ -18,21 +18,25 @@ require("../config.php");
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Użytkownicy</h1>
+                <a class="btn btn-primary" href="changeUserInfo.php?new-user">+ Dodaj nowego użytkownika</a>
             </div>
+
+
 
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0" >
+                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Imię i nazwisko</th>
                                     <th>Email</th>
                                     <th>Data urodzenia</th>
                                     <th>Nr. telefonu</th>
-                                    <th>Status</th>
                                     <th>Data utworzenia konta</th>
-                                    <th>Dstępne akcje</th>
+                                    <th>Status</th>
+                                    <th>Rodzaj konta</th>
+                                    <th>Dostępne akcje</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,6 +45,24 @@ require("../config.php");
                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
 
                                 foreach ($result as $user) {
+
+                                    $typ_uzytkownika = "";
+
+                                    $query = "SELECT * FROM " . $prefix . "_students WHERE user_id =" . $user['user_id'] . ";";
+                                    $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                    if (mysqli_num_rows($result) == 1) {
+                                        $typ_uzytkownika = "Uczeń";
+                                    }
+                                    $query = "SELECT * FROM " . $prefix . "_teachers WHERE user_id =" . $user['user_id'] . ";";
+                                    $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                    if (mysqli_num_rows($result) == 1) {
+                                        $typ_uzytkownika = "Nauczyciel";
+                                    }
+                                    $query = "SELECT * FROM " . $prefix . "_admins WHERE user_id =" . $user['user_id'] . ";";
+                                    $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                    if (mysqli_num_rows($result) == 1) {
+                                        $typ_uzytkownika = "Administrator";
+                                    }
 
                                     if ($user['active'] == 0) {
                                         $_status = "Wyłączone";
@@ -54,6 +76,7 @@ require("../config.php");
                                             <td>' . $user['email'] . '</td>
                                             <td>' . $user['birth_date'] . '</td>
                                             <td>' . $user['phone'] . '</td>
+                                            <td>' . $user['date_of_join'] . '</td>
                                             <td><div class="badge ';
                                     if ($user['active'] == 1) {
                                         echo 'bg-success text-white';
@@ -61,20 +84,19 @@ require("../config.php");
                                         echo 'bg-danger text-white';
                                     }
                                     echo ' text-wrap">' . $_status . '</div></td>
-                                            <td>' . $user['date_of_join'] . '</td>
+                                             <td>' . $typ_uzytkownika . '</td>
 
                                             <td>
 
                                             <form action="changeUserInfo.php" method="POST" style="float:left">
                                             <input name="edit_user_id" type="hidden" value="' . $user['user_id'] . '">
-                                            <input name="changeStatusSubmit" class="btn btn-primary btn-sm ml-2" type="submit" value="Edytuj">
+                                            <input name="changeStatusSubmit" class="btn btn-info btn-sm ml-2" type="submit" value="Edytuj">
                                             </form>
 
-                                                <div id="' . $user['user_id'] . '" onClick="sendID(this.id)" style="float: left;">
-                                                    <a class="btn btn-danger btn-sm ml-2" href="#" data-toggle="modal" data-target="#removeMessage">
-                                                         Usuń
-                                                    </a>
-                                                </div>
+                                            <form action="userManagment\deleteAccount.php" method="POST" style="float:left" onSubmit="return confirm(\'Czy na pewno chcesz usunąć tego użytkownika?\')">
+                                            <input name="delete_user_id" type="hidden" value="' . $user['user_id'] . '">
+                                            <input name="deleteUserSubmit" class="btn btn-danger btn-sm ml-2" type="submit" value="Usuń">
+                                            </form>
                                                 ';
                                     if ($user['active'] == 0) {
                                         echo '
@@ -100,42 +122,13 @@ require("../config.php");
                                 ?>
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
-
-
+            <?php if(isset($_SESSION['delete_message'])) echo $_SESSION['delete_message']; unset($_SESSION['delete_message']);?>
         </div>
     </div>
-
-    <!-- Remove message -->
-    <div class="modal fade" id="removeMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">Usuń Wiadomość</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Czy na pewno chcesz usunąć tą wiadomość?
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Anuluj</button>
-                    <form action="messages/removeMessageInbox.php" method="post">
-                        <input type="submit" class="btn btn-primary" value="Usuń" name="RemoveLesson" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function sendID(id) {
-            var message_id = id;
-            document.cookie = "user_id=" + message_id + ";SameSite=Lax;";
-        }
-    </script>
     <?php
 
     include('includes/scripts.php');

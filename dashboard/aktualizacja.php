@@ -21,10 +21,11 @@ if (isset($_POST["submit"])) {
             $imgContent = addslashes(file_get_contents($image));
 
             // Insert image content into database 
+
             if(isset($_SESSION['edit_user_id'])){
                 $query = "UPDATE " . $prefix . "_users SET avatar = '" . $imgContent . "' WHERE user_id = '" . $_SESSION['edit_user_id'] . "';";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
-                $_POST['edit_user_id'] = $_SESSION['edit_user_id'];
+                $_SESSION['last_edit_id'] = $_SESSION['edit_user_id'];
                 unset($_SESSION['edit_user_id']);
             }
             else{
@@ -63,11 +64,37 @@ if ($_POST['password1'] === $_POST['password2']) {
         $email =  $_POST['Email'];
         $password = $_POST['password2'];
         if ($_POST['password2'] == "") {
-            $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['user_id'] . "';";
-            $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+            if(isset($_SESSION['edit_user_id'])){
+                $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['edit_user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                $_SESSION['last_edit_id'] = $_SESSION['edit_user_id'];
+                unset($_SESSION['edit_user_id']);
+            }
+            else{
+                $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                unset($_SESSION['edit_user_id']);
+            }
+
+
+
         } else {
-            $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , password='" . password_hash($_POST['password2'], PASSWORD_DEFAULT) . "',email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['user_id'] . "';";
-            $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+            if(isset($_SESSION['edit_user_id'])){
+                $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , password='" . password_hash($_POST['password2'], PASSWORD_DEFAULT) . "',email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['edit_user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                $_SESSION['last_edit_id'] = $_SESSION['edit_user_id'];
+                unset($_SESSION['edit_user_id']);
+            }
+            else{
+                $query = "UPDATE " . $prefix . "_users SET first_name = '" . $_POST['first_name'] . "' , last_name='" . $_POST['last_name'] . "' , password='" . password_hash($_POST['password2'], PASSWORD_DEFAULT) . "',email='" . $_POST['Email'] . "' , birth_date='" . $_POST['birthday'] . "' , phone='" . $_POST['phone'] . "'  WHERE user_id = '" . $_SESSION['user_id'] . "';";
+                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                unset($_SESSION['edit_user_id']);
+            }
+
+
+
         }
         $_SESSION['changepswd']= 1;
         header("location:changeUserInfo.php");
