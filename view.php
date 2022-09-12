@@ -31,6 +31,13 @@
             $post_image = $wynik['image'];
             $post_date = $wynik['date'];
 
+            $prefixPath = '../../';
+            $image_path = $post_image;
+        
+            if (substr($image_path, 0, strlen($prefixPath)) == $prefixPath) {
+                $image_path = substr($image_path, strlen($prefixPath));
+            }
+
             echo'
                 <div class="container mt-5">
                     <div class="col-md-8 offset-md-2">
@@ -42,7 +49,7 @@
                                 <div class="text-muted fst-italic mb-2">Opublikowano '.$post_date .'</div>
                             </header>
                             <!-- Preview image figure-->
-                            <figure class="mb-4"><img class="img-fluid rounded" src="data:image/jpeg;base64,'.base64_encode($post_image).'" alt="..." /></figure>
+                            <figure class="mb-4"><img class="img-fluid rounded" src="'.$image_path.'" alt="..." /></figure>
                              <!-- Post content-->
                              <section class="mb-5">
                              '.$post_contet.'

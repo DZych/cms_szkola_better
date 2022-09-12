@@ -14,6 +14,14 @@ while ($wynik = mysqli_fetch_assoc($result)) {
     $post_title = $wynik['title'];
     $post_contet = $wynik['content'];
     $post_image = $wynik['image'];
+    
+    $prefixPath = '../../';
+    $image_path = $post_image;
+
+    if (substr($image_path, 0, strlen($prefixPath)) == $prefixPath) {
+        $image_path = substr($image_path, strlen($prefixPath));
+    }
+    
 
     // przycięcie zawartości postu
     $result_content = strlen($post_contet) > 600 ? substr($post_contet,0,600)."..." : $post_contet;
@@ -21,7 +29,7 @@ while ($wynik = mysqli_fetch_assoc($result)) {
     <div class="row">
         <div class="col-md-7">
             <a href="view.php?id='.$post_id.'">
-                <img class="img-fluid rounded mb-3 mb-md-0" src="data:image/jpeg;base64,'.base64_encode($post_image).'" alt="">
+                <img class="img-fluid rounded mb-3 mb-md-0" src="'.$image_path.'" alt="">
             </a>
         </div>
         <div class="col-md-5">
@@ -29,6 +37,7 @@ while ($wynik = mysqli_fetch_assoc($result)) {
             <p>'.$result_content.'</p>
             <a class="btn btn-secondary float-end" href="view.php?id='.$post_id.'">Zobacz więcej</a>
         </div>
+    </div>
     </div>
     </br>
     </br>

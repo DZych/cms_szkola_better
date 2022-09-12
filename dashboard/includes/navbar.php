@@ -81,7 +81,19 @@
         </div>
     </li>
 
-    
+    <?php
+    if ($_SESSION['is_admin'] == true) {
+        echo '
+        <!-- Nav Item - News -->
+        <li class="nav-item">
+            <a class="nav-link" href="newsManagement.php">
+                <i class="fas fa-fw fa-newspaper"></i>
+                <span>News</span></a>
+        </li>
+        ';
+    }
+    ?>
+
     <?php
     if ($_SESSION['is_admin'] == true) {
         echo '

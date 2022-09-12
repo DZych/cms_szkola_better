@@ -25,17 +25,18 @@ include("../../config.php");
                 $query = "INSERT INTO ".$prefix."._users (email, password, first_name, last_name, birth_date, date_of_join, phone, active)
                 VALUES ( '".$_POST['Email']."', '".password_hash($_POST['password2'], PASSWORD_DEFAULT) ."', '".$_POST['first_name']."', '".$_POST['last_name']."', '".$_POST['birthday']."', '".date('Y-m-d')."', '".$_POST['phone']."', '1');";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                $last_inserted_user_id = mysqli_insert_id($link);
 
                 if($_POST['userType'] == "s"){
-                    $query = "INSERT INTO _students (user_id) VALUES ('".mysqli_insert_id($link)."');";
+                    $query = "INSERT INTO _students (user_id) VALUES ('".$last_inserted_user_id."');";
                     $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 }
                 if($_POST['userType'] == "t"){
-                    $query = "INSERT INTO _teachers (user_id) VALUES ('".mysqli_insert_id($link)."');";
+                    $query = "INSERT INTO _teachers (user_id) VALUES ('".$last_inserted_user_id."');";
                     $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 }
-                if($_POST['userType'] == "t"){
-                    $query = "INSERT INTO _admins (user_id) VALUES ('".mysqli_insert_id($link)."');";
+                if($_POST['userType'] == "a"){
+                    $query = "INSERT INTO _admins (user_id) VALUES ('".$last_inserted_user_id."');";
                     $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 }
                 
