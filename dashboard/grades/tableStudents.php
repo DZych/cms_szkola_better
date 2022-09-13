@@ -33,13 +33,16 @@
             </select>
             <input class="btn btn-primary text-center mt-1 mb-3" type="submit" name="showTableBtn" value="Wyświetl oceny uczniów" />
         </form>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <?php
-                if (isset($_POST['AddGrade'])) {
-                    include("scripts/php/addGrade.php");
-                }
-                if (isset($_POST['showTableBtn'])) {
+
+        <?php
+        if (isset($_POST['AddGrade'])) {
+            include("scripts/php/addGrade.php");
+        }
+        if (isset($_POST['showTableBtn'])) {
+        ?>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <?php
                     if (isset($_POST["selected_class"]) & isset($_POST["selected_subject"])) {
 
                         $_SESSION['last_selected_class_id'] = $_POST["selected_class"];
@@ -53,12 +56,12 @@
                         INNER JOIN _student_class ON _student_class.student_id = _students.student_id 
                         INNER JOIN _classes ON _student_class.class_id = _classes.class_id 
                         LEFT JOIN _grades ON _students.student_id = _grades.id_student
-                        WHERE _classes.class_id = " . $class_id . " ";
+                        WHERE _classes.class_id = " . $class_id . " GROUP BY _students.student_id";
                         $result = mysqli_query($link, $query);
 
 
                         if (mysqli_num_rows($result) > 0) {
-                ?><thead>
+                    ?><thead>
                                 <tr>
                                     <th>Imię</th>
                                     <th>Nazwisko</th>
@@ -92,7 +95,7 @@
                                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                                                 while ($wynik = mysqli_fetch_assoc($result)) {
                                                 ?>
-                                                    <div id=<?= $wynik['id'] ?> onClick="" class="float-left ml-1">
+                                                    <div id=<?= $wynik['id'] ?> onClick="SendGradeID(this.id)" class="float-left ml-1">
                                                         <a name="show_grade_btn" class="<?php
                                                                                         if ($wynik['grade'] < 2) {
                                                                                         ?>btn btn-danger<?php
@@ -126,8 +129,8 @@
                             }
                         }
                 ?>
-            </table>
-        </div>
+                </table>
+            </div>
     </div>
 </div>
 
@@ -177,6 +180,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="showGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">Ocena id <?= $_COOKIE["gradeID"]; ?></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     function SelectedClass() {
         var x = document.getElementById("Selector_Class").value;
@@ -201,5 +223,9 @@
     function SelectedGrade() {
         var x = document.getElementById("Grade").value;
         document.cookie = "grade=" + x + ";SameSite=Lax;";
+    }
+
+    function SendGradeID(id) {
+        document.cookie = "gradeID=" + id + ";SameSite=Lax;";
     }
 </script>

@@ -37,13 +37,18 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                                     while ($wynikGrades = mysqli_fetch_assoc($resultGrades)) {
                                     ?>
                                         <div id=<?= $wynikGrades['id'] ?> onClick="" class="float-left ml-1">
-                                            <a name="show_grade_btn" class="<?php
-                                                                            if ($wynikGrades['grade'] < 2) {
-                                                                            ?>btn btn-danger<?php
-                                                                                        } else {
-                                                                                            ?>btn btn-success<?php
-                                                                                                                        }
-                                                                                                                            ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynikGrades['grade'] ?></a>
+                                            <a name="show_grade_btn" class="
+                                            <?php
+                                            if ($wynikGrades['grade'] < 2) {
+                                            ?>
+                                                                            btn btn-danger
+                                                                            <?php
+                                                                        } else {
+                                                                            ?>
+                                                                            btn btn-success
+                                                                                            <?php
+                                                                                        }
+                                                                                            ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynikGrades['grade'] ?></a>
                                         </div>
                                     <?php
 
