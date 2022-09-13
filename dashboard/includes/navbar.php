@@ -94,6 +94,19 @@
     }
     ?>
 
+<?php
+    if ($_SESSION['is_admin'] == true) {
+        echo '
+        <!-- Nav Item - Users -->
+        <li class="nav-item">
+            <a class="nav-link" href="classesManagement.php">
+                <i class="fas fa-fw fa-school"></i>
+                <span>Klasy</span></a>
+        </li>
+        ';
+    }
+    ?>
+
     <?php
     if ($_SESSION['is_admin'] == true) {
         echo '
@@ -106,6 +119,7 @@
         ';
     }
     ?>
+    
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
