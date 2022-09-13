@@ -10,10 +10,7 @@
          <div class="collapse navbar-collapse" id="main-navbar">
              <ul class="navbar-nav me-auto">
                  <li class="nav-item">
-                     <a class="nav-link text-dark fw-bold" href="#">Aktualności</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link text-dark fw-bold" href="#">Dziennik</a>
+                     <a class="nav-link text-dark fw-bold" href="index.php">Aktualności</a>
                  </li>
                  <li class="nav-item">
                      <a class="nav-link text-dark fw-bold" href="about.php">O Naszej szkole</a>
