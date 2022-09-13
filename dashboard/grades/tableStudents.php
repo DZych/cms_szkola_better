@@ -38,6 +38,9 @@
         if (isset($_POST['AddGrade'])) {
             include("scripts/php/addGrade.php");
         }
+        if (isset($_POST['RemoveGrade'])) {
+            include("scripts/php/removeGrade.php");
+        }
         if (isset($_POST['showTableBtn'])) {
         ?>
             <div class="table-responsive">
@@ -50,13 +53,13 @@
                         $_SESSION['last_selected_subject_id'] = $_POST["selected_subject"];
                         $subject_id = $_POST["selected_subject"];
 
-                        $query = "SELECT _students.student_id, _users.first_name, _users.last_name, _classes.name, COUNT(_grades.id_student) as ilosc 
+                        $query = "SELECT " . $prefix . "_students.student_id, " . $prefix . "_users.first_name, " . $prefix . "_users.last_name, " . $prefix . "_classes.name, COUNT(" . $prefix . "_grades.id_student) as ilosc 
                         FROM " . $prefix . "_users 
-                        INNER JOIN " . $prefix . "_students ON _users.user_id = _students.user_id 
-                        INNER JOIN " . $prefix . "_student_class ON _student_class.student_id = _students.student_id 
-                        INNER JOIN " . $prefix . "_classes ON _student_class.class_id = _classes.class_id 
-                        LEFT JOIN " . $prefix . "_grades ON _students.student_id = _grades.id_student
-                        WHERE _classes.class_id = " . $class_id . " GROUP BY _students.student_id";
+                        INNER JOIN " . $prefix . "_students ON " . $prefix . "_users.user_id = " . $prefix . "_students.user_id 
+                        INNER JOIN " . $prefix . "_student_class ON " . $prefix . "_student_class.student_id = " . $prefix . "_students.student_id 
+                        INNER JOIN " . $prefix . "_classes ON " . $prefix . "_student_class.class_id = " . $prefix . "_classes.class_id 
+                        LEFT JOIN " . $prefix . "_grades ON " . $prefix . "_students.student_id = " . $prefix . "_grades.id_student
+                        WHERE _classes.class_id = " . $class_id . " GROUP BY " . $prefix . "_students.student_id";
                         $result = mysqli_query($link, $query);
 
 
@@ -67,17 +70,19 @@
                                     <th>Nazwisko</th>
                                     <th>Klasa</th>
                                     <th>Dodaj ocenę</th>
-                                    <th>Wyświetl oceny</th>
+                                    <th>Oceny</th>
+                                    <th>Zarządaj ocenami</th>
 
                                 </tr>
-                            </thead><?php
+                            </thead>
+                            <tbody><?php
                                     foreach ($result as $student) {
                                         if (isset($student['student_id'])) {
                                     ?>
 
 
 
-                                    <tbody>
+
                                         <tr>
                                             <td><?= $student['first_name'] ?></td>
                                             <td><?= $student['last_name'] ?></td>
@@ -90,33 +95,65 @@
                                             <td><?php
                                                 $id = $student['student_id'];
                                                 $subID = $_COOKIE["subject_id"];
-                                                $grades_list;
+                                                $grades_list = null;
+                                                $gradesInfo_list = null;
                                                 $query = "SELECT `id`, `grade` FROM " . $prefix . "`_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
                                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+
+
+
+
                                                 while ($wynik = mysqli_fetch_assoc($result)) {
+                                                    $idGrade = $wynik['id'];
+                                                    $queryGradeInfo = "SELECT " . $prefix . "_grades_type.type, " . $prefix . "_users.first_name, " . $prefix . "_users.last_name
+                                                    FROM " . $prefix . "_grades 
+                                                    INNER JOIN " . $prefix . "_grades_type ON " . $prefix . "_grades.type = " . $prefix . "_grades_type.type_id 
+                                                    INNER JOIN " . $prefix . "_teachers ON " . $prefix . "_grades.teacher_id = " . $prefix . "_teachers.teacher_id
+                                                    INNER JOIN " . $prefix . "_users ON " . $prefix . "_teachers.user_id = " . $prefix . "_users.user_id
+                                                    WHERE " . $prefix . "_grades.id = $idGrade";
+                                                    $resultGradeInfo = mysqli_query($link, $queryGradeInfo) or die("Zapytanie zakończone niepowodzeniem");
+
+                                                    while ($wynikGradeInfo = mysqli_fetch_assoc($resultGradeInfo)) {
                                                 ?>
-                                                    <div id=<?= $wynik['id'] ?> onClick="SendGradeID(this.id)" class="float-left ml-1">
-                                                        <a name="show_grade_btn" class="<?php
-                                                                                        if ($wynik['grade'] < 2) {
-                                                                                        ?>btn btn-danger<?php
-                                                                                                    } else {
-                                                                                                        ?>btn btn-success<?php
-                                                                                                                        }
-                                                                                                                            ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynik['grade'] ?></a>
-                                                    </div>
+                                                        <div id=<?= $wynik['id'] ?> data-placement="top" title="<?= $wynikGradeInfo['type'] . " (" . $wynikGradeInfo['first_name'] . " " . $wynikGradeInfo['last_name'] . ")" ?>" class="tt float-left ml-1">
+                                                            <a name="grade" class="<?php
+                                                                                    if ($wynik['grade'] < 2) {
+                                                                                    ?>btn btn-danger<?php
+                                                                                                } else {
+                                                                                                    ?>btn btn-success<?php
+                                                                                                                    }
+                                                                                                                        ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynik['grade'] ?></a>
+                                                        </div>
                                                 <?php
 
+                                                        $gradesInfo_list[$wynik['id']] = $wynikGradeInfo['type'] . " (" . $wynikGradeInfo['first_name'] . " " . $wynikGradeInfo['last_name'] . ")";
+                                                    }
                                                     $grades_list[$wynik['id']] = $wynik['grade'];
                                                 }
 
                                                 ?>
                                             </td>
+                                            <td style="width:250px;">
+                                                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+                                                    <select required id="Selector_Grade" class="form-control mb-2" style="width:250px;" name="selected_grade" onchange="SelectedGradeEdit()">
+                                                        <option value="" selected disabled hidden>Wybierz ocenę do usunięcia</option>
+                                                        <?php
+                                                        if ($_SESSION['is_teacher'] == true) {
+                                                            foreach ($gradesInfo_list as $key => $info) {
+                                                                echo '<option value="' . $key . '">' . $grades_list[$key] . " " . $info . '</option>';
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                    <input class="btn btn-danger text-center mt-1 mb-3 float-left ml-1" type="submit" name="RemoveGrade" value="Usuń" />
+                                                </form>
+                                            </td>
 
                                         </tr>
-                                    </tbody>
 
 
-                <?php
+
+                    <?php
                                         } else {
                                             echo "<h5> Brak danych </h5>";
                                         }
@@ -127,9 +164,11 @@
                             } else {
                                 echo "<h5> Wybierz klasę i przedmiot. </h5>";
                             }
+                            echo "<h5> Oceny uczniów klasy " . $classes_list[$_POST["selected_class"]] . " z przedmiotu: " . $subjects_list[$_POST["selected_subject"]] . "</h5>";
                         }
-                ?>
-                </table>
+
+                    ?>
+
             </div>
     </div>
 </div>
@@ -140,7 +179,7 @@
 <div class="modal fade" id="addGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">Dodaj ocenę uczniowi: <?= $studentName =  $_COOKIE["name"]; ?></h5>
+            <div class="modal-header">Dodaj ocenę uczniowi: </h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -181,10 +220,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="showGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- Edytuj ocenę Modal-->
+
+<div class="modal fade" id="editGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">Ocena id <?= $_COOKIE["gradeID"]; ?></h5>
+            <div class="modal-header">Edytuj ocenę: </h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -193,11 +235,39 @@
 
                 <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
 
+                    <div class="mb3">
+                        <label>Rodzaj oceny</label>
+                        <select required id="TypeGrade" class="form-control" name="type" onchange="SelectedTypeGrade()">
+                            <option value="" selected disabled hidden>Wybierz rodzaj oceny</option>
+                            <?php
+                            if ($_SESSION['is_teacher'] == true) {
+                                $query = "SELECT * FROM " . $prefix . "_grades_type;";
+                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
+                                while ($wynik = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $wynik['type_id'] . '">' . $wynik['type'] . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3 mt-2">
+                        <label>Ocena</label>
+                        <input required id="Grade" type="number" name="grade" class="form-control" min="1" max="6" step="0.5" onchange="SelectedGrade()" />
+                    </div>
 
             </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Anuluj</button>
+
+                <input type="submit" class="btn btn-primary" value="Dodaj" name="AddGrade" />
+
+            </div>
+            </form>
         </div>
     </div>
 </div>
+
+
 
 
 <script type="text/javascript">
@@ -226,7 +296,8 @@
         document.cookie = "grade=" + x + ";SameSite=Lax;";
     }
 
-    function SendGradeID(id) {
-        document.cookie = "gradeID=" + id + ";SameSite=Lax;";
+    function SelectedGradeEdit() {
+        var x = document.getElementById("Selector_Grade").value;
+        document.cookie = "gradeSelected=" + x + ";SameSite=Lax;";
     }
 </script>

@@ -16,6 +16,8 @@ if (mysqli_num_rows($result) > 0) {
         $query = "INSERT INTO " . $prefix . "`_grades` (`id_student`, `subject_id`, `teacher_id`, `grade`, `type`) 
         VALUES (" . $id_student . ", " . $subject_id . ", " . $teacher['teacher_id'] . ", " . $grade . ", " . $type . ");";
         $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
-        echo '<h5>Pomyślnie dodano ocenę. </h5>';
+        $_POST['showTableBtn'] = 1;
+        $_POST["selected_class"] = $_SESSION['last_selected_class_id'];
+        $_POST["selected_subject"] = $_SESSION['last_selected_subject_id'];
     };
 };

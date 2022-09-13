@@ -1,6 +1,6 @@
 <?php
 $userid = $_SESSION['user_id'];
-$query = "SELECT `student_id` FROM `_students` WHERE `user_id`= $userid";
+$query = "SELECT `student_id` FROM " . $prefix . "`_students` WHERE `user_id`= $userid";
 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
 while ($wynik = mysqli_fetch_assoc($result)) {
     $studentId = $wynik['student_id'];
@@ -21,7 +21,7 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                 </thead>
                 <tbody>
                     <?php {
-                        $query = "SELECT _grades.subject_id, _subjects.name FROM " . $prefix . "_grades INNER JOIN " . $prefix . "_subjects ON _grades.subject_id=_subjects.subject_id WHERE _grades.id_student = $studentId group by _grades.subject_id;";
+                        $query = "SELECT " . $prefix . "_grades.subject_id, " . $prefix . "_subjects.name FROM " . $prefix . "_grades INNER JOIN " . $prefix . "_subjects ON " . $prefix . "_grades.subject_id=" . $prefix . "_subjects.subject_id WHERE " . $prefix . "_grades.id_student = $studentId group by " . $prefix . "_grades.subject_id;";
                         $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                         while ($wynik = mysqli_fetch_assoc($result)) {
 
@@ -35,9 +35,19 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                                     $queryGrades = "SELECT `id`, `grade` FROM " . $prefix . "`_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
                                     $resultGrades = mysqli_query($link, $queryGrades) or die("Zapytanie zakończone niepowodzeniem");
                                     while ($wynikGrades = mysqli_fetch_assoc($resultGrades)) {
+                                        $idGrade = $wynikGrades['id'];
+                                        $queryGradeInfo = "SELECT " . $prefix . "_grades_type.type, " . $prefix . "_users.first_name, " . $prefix . "_users.last_name
+                                                    FROM " . $prefix . "_grades 
+                                                    INNER JOIN " . $prefix . "_grades_type ON " . $prefix . "_grades.type = " . $prefix . "_grades_type.type_id 
+                                                    INNER JOIN " . $prefix . "_teachers ON " . $prefix . "_grades.teacher_id = " . $prefix . "_teachers.teacher_id
+                                                    INNER JOIN " . $prefix . "_users ON " . $prefix . "_teachers.user_id = " . $prefix . "_users.user_id
+                                                    WHERE " . $prefix . "_grades.id = $idGrade";
+                                        $resultGradeInfo = mysqli_query($link, $queryGradeInfo) or die("Zapytanie zakończone niepowodzeniem");
+
+                                        while ($wynikGradeInfo = mysqli_fetch_assoc($resultGradeInfo)) {
                                     ?>
-                                        <div id=<?= $wynikGrades['id'] ?> onClick="" class="float-left ml-1">
-                                            <a name="show_grade_btn" class="
+                                            <div id=<?= $wynikGrades['id'] ?> data-placement="top" title="<?= $wynikGradeInfo['type'] . " (" . $wynikGradeInfo['first_name'] . " " . $wynikGradeInfo['last_name'] . ")" ?>" class="tt float-left ml-1">
+                                                <a name="show_grade_btn" class="
                                             <?php
                                             if ($wynikGrades['grade'] < 2) {
                                             ?>
@@ -49,12 +59,12 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                                                                                             <?php
                                                                                         }
                                                                                             ?>" href="#" data-toggle="modal" data-target="#showGrade"><?= $wynikGrades['grade'] ?></a>
-                                        </div>
+                                            </div>
                                     <?php
 
-                                        $grades_list[$wynikGrades['id']] = $wynikGrades['grade'];
+                                            $grades_list[$wynikGrades['id']] = $wynikGrades['grade'];
+                                        }
                                     }
-
                                     ?>
                                 </td>
                             </tr>
