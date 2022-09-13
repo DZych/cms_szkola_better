@@ -7,7 +7,7 @@
                 <?php
                 if ($_SESSION['is_teacher'] == true) {
                     $classes_list;
-                    $query = "SELECT * FROM _classes;";
+                    $query = "SELECT * FROM " . $prefix . "_classes;";
                     $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                     while ($wynik = mysqli_fetch_assoc($result)) {
                         echo '<option value="' . $wynik['class_id'] . '">Klasa ' . $wynik['name'] . '</option>';
@@ -22,7 +22,7 @@
                 <?php
                 if ($_SESSION['is_teacher'] == true) {
                     $subjects_list;
-                    $query = "SELECT * FROM _subjects;";
+                    $query = "SELECT * FROM " . $prefix . "_subjects;";
                     $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                     while ($wynik = mysqli_fetch_assoc($result)) {
                         echo '<option value="' . $wynik['subject_id'] . '">' . $wynik['name'] . '</option>';
@@ -51,11 +51,11 @@
                         $subject_id = $_POST["selected_subject"];
 
                         $query = "SELECT _students.student_id, _users.first_name, _users.last_name, _classes.name, COUNT(_grades.id_student) as ilosc 
-                        FROM _users 
-                        INNER JOIN _students ON _users.user_id = _students.user_id 
-                        INNER JOIN _student_class ON _student_class.student_id = _students.student_id 
-                        INNER JOIN _classes ON _student_class.class_id = _classes.class_id 
-                        LEFT JOIN _grades ON _students.student_id = _grades.id_student
+                        FROM " . $prefix . "_users 
+                        INNER JOIN " . $prefix . "_students ON _users.user_id = _students.user_id 
+                        INNER JOIN " . $prefix . "_student_class ON _student_class.student_id = _students.student_id 
+                        INNER JOIN " . $prefix . "_classes ON _student_class.class_id = _classes.class_id 
+                        LEFT JOIN " . $prefix . "_grades ON _students.student_id = _grades.id_student
                         WHERE _classes.class_id = " . $class_id . " GROUP BY _students.student_id";
                         $result = mysqli_query($link, $query);
 
@@ -91,7 +91,7 @@
                                                 $id = $student['student_id'];
                                                 $subID = $_COOKIE["subject_id"];
                                                 $grades_list;
-                                                $query = "SELECT `id`, `grade` FROM `_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
+                                                $query = "SELECT `id`, `grade` FROM " . $prefix . "`_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
                                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                                                 while ($wynik = mysqli_fetch_assoc($result)) {
                                                 ?>
@@ -155,7 +155,7 @@
                             <option value="" selected disabled hidden>Wybierz rodzaj oceny</option>
                             <?php
                             if ($_SESSION['is_teacher'] == true) {
-                                $query = "SELECT * FROM _grades_type;";
+                                $query = "SELECT * FROM " . $prefix . "_grades_type;";
                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                                 while ($wynik = mysqli_fetch_assoc($result)) {
                                     echo '<option value="' . $wynik['type_id'] . '">' . $wynik['type'] . '</option>';

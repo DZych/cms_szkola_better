@@ -21,7 +21,7 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                 </thead>
                 <tbody>
                     <?php {
-                        $query = "SELECT _grades.subject_id, _subjects.name FROM _grades INNER JOIN _subjects ON _grades.subject_id=_subjects.subject_id WHERE _grades.id_student = $studentId group by _grades.subject_id;";
+                        $query = "SELECT _grades.subject_id, _subjects.name FROM " . $prefix . "_grades INNER JOIN " . $prefix . "_subjects ON _grades.subject_id=_subjects.subject_id WHERE _grades.id_student = $studentId group by _grades.subject_id;";
                         $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                         while ($wynik = mysqli_fetch_assoc($result)) {
 
@@ -32,7 +32,7 @@ while ($wynik = mysqli_fetch_assoc($result)) {
                                     $id = $studentId;
                                     $subID = $wynik['subject_id'];
                                     $grades_list;
-                                    $queryGrades = "SELECT `id`, `grade` FROM `_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
+                                    $queryGrades = "SELECT `id`, `grade` FROM " . $prefix . "`_grades` WHERE `id_student` = $id AND `subject_id` = $subID;";
                                     $resultGrades = mysqli_query($link, $queryGrades) or die("Zapytanie zakończone niepowodzeniem");
                                     while ($wynikGrades = mysqli_fetch_assoc($resultGrades)) {
                                     ?>
