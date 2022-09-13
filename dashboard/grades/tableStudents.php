@@ -221,54 +221,6 @@
 </div>
 
 
-<!-- Edytuj ocenę Modal-->
-
-<div class="modal fade" id="editGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">Edytuj ocenę: </h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-
-                    <div class="mb3">
-                        <label>Rodzaj oceny</label>
-                        <select required id="TypeGrade" class="form-control" name="type" onchange="SelectedTypeGrade()">
-                            <option value="" selected disabled hidden>Wybierz rodzaj oceny</option>
-                            <?php
-                            if ($_SESSION['is_teacher'] == true) {
-                                $query = "SELECT * FROM " . $prefix . "_grades_type;";
-                                $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
-                                while ($wynik = mysqli_fetch_assoc($result)) {
-                                    echo '<option value="' . $wynik['type_id'] . '">' . $wynik['type'] . '</option>';
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3 mt-2">
-                        <label>Ocena</label>
-                        <input required id="Grade" type="number" name="grade" class="form-control" min="1" max="6" step="0.5" onchange="SelectedGrade()" />
-                    </div>
-
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Anuluj</button>
-
-                <input type="submit" class="btn btn-primary" value="Dodaj" name="AddGrade" />
-
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
 
 <script type="text/javascript">
     function SelectedClass() {

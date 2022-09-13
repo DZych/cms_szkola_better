@@ -43,8 +43,8 @@ include("includes/navbar.php");
                 <div class="card-body">
                     <p class="h4">Wybierz klasę</p>
                     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-                        <select id="Selector_Class" class="form-control mb-2" style="width:200px;" name="selected_class" onchange="SelectedClass()">
-                            <option value="none" selected disabled hidden>Wybierz klasę</option>
+                        <select required id="Selector_Class" class="form-control mb-2" style="width:200px;" name="selected_class" onchange="SelectedClass()">
+                            <option value="" selected disabled hidden>Wybierz klasę</option>
                             <?php
                             if ($_SESSION['is_admin'] == true) {
                                 $classes_list;
