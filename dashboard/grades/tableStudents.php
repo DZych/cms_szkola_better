@@ -134,6 +134,7 @@
     </div>
 </div>
 
+
 <!-- Dodaj ocenę Modal-->
 
 <div class="modal fade" id="addGrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
