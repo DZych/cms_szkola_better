@@ -1,10 +1,6 @@
 <?php
 session_start();
 include("../../config.php");
-
-    echo $_POST['class_id_to_add'];
-    echo $_POST['selected_student_id'];
-
     if($_POST['selected_student_id'] != null){
         $_SESSION['class_id_to_add'] = $_POST['class_id_to_add'];
 

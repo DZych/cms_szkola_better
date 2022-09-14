@@ -20,7 +20,7 @@ include("includes/navbar.php");
             <?php
             if ($_SESSION['is_admin'] == true) {
                 require_once("../config.php");
-                $query = "SELECT * FROM _classes;";
+                $query = "SELECT * FROM ".$prefix."_classes;";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 while ($wynik = mysqli_fetch_assoc($result)) {
                     $class_name = $wynik['name'];
@@ -48,7 +48,7 @@ include("includes/navbar.php");
                             <?php
                             if ($_SESSION['is_admin'] == true) {
                                 $classes_list;
-                                $query = "SELECT * FROM _classes;";
+                                $query = "SELECT * FROM ".$prefix."_classes;";
                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                                 while ($wynik = mysqli_fetch_assoc($result)) {
                                     echo '<option value="' . $wynik['class_id'] . '">Klasa ' . $wynik['name'] . '</option>';
@@ -84,16 +84,16 @@ include("includes/navbar.php");
                             }
 
 
-                            $query = "SELECT _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
-                                                                FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons
-                                                                WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
-                                                                and _class_lessons.class_id = _classes.class_id
-                                                                and _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
-                                                                and _teacher_subject.teacher_id = _teachers.teacher_id
-                                                                and _teacher_subject.subject_id = _subjects.subject_id
-                                                                and _teachers.user_id = _users.user_id
-                                                                and _classes.class_id = " . $class_id . "
-                                                                ORDER BY _timetable.lesson_number";
+                            $query = "SELECT ".$prefix."_timetable.timetable_id, ".$prefix."_timetable.day, ".$prefix."_timetable.lesson_number, ".$prefix."_classes.name as class_name,  ".$prefix."_classes.class_id, ".$prefix."_users.first_name, ".$prefix."_users.last_name, ".$prefix."_subjects.name as subject_name 
+                                                                FROM ".$prefix."_timetable, ".$prefix."_classes, ".$prefix."_teacher_subject, ".$prefix."_teachers, ".$prefix."_subjects, ".$prefix."_users, ".$prefix."_class_lessons
+                                                                WHERE ".$prefix."_timetable.class_lesson_id = ".$prefix."_class_lessons.class_lesson_id
+                                                                and ".$prefix."_class_lessons.class_id = ".$prefix."_classes.class_id
+                                                                and ".$prefix."_class_lessons.teacher_subject_id = ".$prefix."_teacher_subject.teacher_subject_id
+                                                                and ".$prefix."_teacher_subject.teacher_id = ".$prefix."_teachers.teacher_id
+                                                                and ".$prefix."_teacher_subject.subject_id = ".$prefix."_subjects.subject_id
+                                                                and ".$prefix."_teachers.user_id = ".$prefix."_users.user_id
+                                                                and ".$prefix."_classes.class_id = " . $class_id . "
+                                                                ORDER BY ".$prefix."_timetable.lesson_number";
                             $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                             $lessons = array();
                             $days = array();
@@ -256,11 +256,11 @@ include("includes/navbar.php");
                                     <?php
                                     if ($_SESSION['is_admin'] == true) {
                                         $classes_list;
-                                        $query = "SELECT _teacher_subject.teacher_subject_id, _teacher_subject.subject_id, _teacher_subject.teacher_id, _subjects.name, _users.first_name, _users.last_name, _users.user_id  
-                                        FROM _teacher_subject, _users, _subjects, _teachers
-                                        WHERE  _teacher_subject.subject_id = _subjects.subject_id
-                                        and _teacher_subject.teacher_id = _teachers.teacher_id
-                                        and _teachers.user_id = _users.user_id order by name";
+                                        $query = "SELECT ".$prefix."_teacher_subject.teacher_subject_id, ".$prefix."_teacher_subject.subject_id, ".$prefix."_teacher_subject.teacher_id, ".$prefix."_subjects.name, ".$prefix."_users.first_name, ".$prefix."_users.last_name, ".$prefix."_users.user_id  
+                                        FROM ".$prefix."_teacher_subject, ".$prefix."_users, ".$prefix."_subjects, ".$prefix."_teachers
+                                        WHERE  ".$prefix."_teacher_subject.subject_id = ".$prefix."_subjects.subject_id
+                                        and ".$prefix."_teacher_subject.teacher_id = ".$prefix."_teachers.teacher_id
+                                        and ".$prefix."_teachers.user_id = ".$prefix."_users.user_id order by name";
                                         $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                                         while ($wynik = mysqli_fetch_assoc($result)) {
                                             echo '<option value="' . $wynik['teacher_subject_id'] . '">' . $wynik['name'] . ' - ' . $wynik['first_name'] . ' ' . $wynik['last_name'] . '</option>';

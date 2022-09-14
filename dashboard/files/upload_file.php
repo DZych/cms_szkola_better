@@ -17,10 +17,10 @@
             // Upload file to server
             if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
                 // Insert image file name into database
-                $query = "INSERT INTO `_files`(`filename`,`filepath`) VALUES('".$fileName."','".$targetFilePath."');";
+                $query = "INSERT INTO ".$prefix."_files (`filename`,`filepath`) VALUES('".$fileName."','".$targetFilePath."');";
                 $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                 if($result == true){
-                    $query = "INSERT INTO `_class_lessons_files` (`file_id`, `class_lesson_id`) VALUES ('".mysqli_insert_id($link)."', '".$class_lesson_id."');";
+                    $query = "INSERT INTO ".$prefix."_class_lessons_files (`file_id`, `class_lesson_id`) VALUES ('".mysqli_insert_id($link)."', '".$class_lesson_id."');";
                     $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
                 }
             }

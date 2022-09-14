@@ -22,7 +22,7 @@ if(isset($_POST['Add_class'])){
     }
 }
 if(isset($_POST['Edit_class'])){
-    $query = "UPDATE ".$prefix."_classes SET name='".$_POST['className']."' WHERE `class_id`=".$_SESSION['edit_class_id']."";
+    $query = "UPDATE ".$prefix."_classes SET name='".$_POST['className']."' WHERE `class_id`=".$_SESSION['edit_subject_id']."";
     $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
     if($result){
         $_SESSION['classes_message'] = '<div class="alert alert-success mt-2">

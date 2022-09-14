@@ -32,36 +32,36 @@ include("includes/navbar.php");
             if ($_SESSION['is_student'] == true) {
 
                 require_once("../config.php");
-                $query = "SELECT _users.user_id, _classes.name, _classes.class_id 
-                                    FROM _student_class, _students, _users, _classes
-                                    WHERE _student_class.student_id = _students.student_id
-                                    and _students.user_id = _users.user_id
-                                    and _student_class.class_id = _classes.class_id
-                                    and _users.user_id = " . $_SESSION['user_id'] . ";";
+                $query = "SELECT ".$prefix."_users.user_id, ".$prefix."_classes.name, ".$prefix."_classes.class_id 
+                                    FROM ".$prefix."_student_class, ".$prefix."_students, ".$prefix."_users, ".$prefix."_classes
+                                    WHERE ".$prefix."_student_class.student_id = ".$prefix."_students.student_id
+                                    and ".$prefix."_students.user_id = ".$prefix."_users.user_id
+                                    and ".$prefix."_student_class.class_id = ".$prefix."_classes.class_id
+                                    and ".$prefix."_users.user_id = " . $_SESSION['user_id'] . ";";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 while ($wynik = mysqli_fetch_assoc($result)) {
                     $class_name = $wynik['name'];
                     $class_id = $wynik['class_id'];
                 }
 
-                $query = "SELECT MAX(lesson_number) as lessons_in_week FROM _timetable, _class_lessons 
-                                    WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
-                                    and _class_lessons.class_id = " . $class_id . ";";
+                $query = "SELECT MAX(lesson_number) as lessons_in_week FROM ".$prefix."_timetable, ".$prefix."_class_lessons 
+                                    WHERE ".$prefix."_timetable.class_lesson_id = ".$prefix."_class_lessons.class_lesson_id
+                                    and ".$prefix."_class_lessons.class_id = " . $class_id . ";";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 while ($wynik = mysqli_fetch_assoc($result)) {
                     $max_lessons_in_week = $wynik['lessons_in_week'];
                 }
 
 
-                $query = "SELECT _class_lessons.class_lesson_id, _timetable.timetable_id, _timetable.day, _timetable.lesson_number, _classes.name as class_name,  _classes.class_id, _users.first_name, _users.last_name, _subjects.name as subject_name 
-                                        FROM _timetable, _classes, _teacher_subject, _teachers, _subjects, _users, _class_lessons
-                                        WHERE _timetable.class_lesson_id = _class_lessons.class_lesson_id
-                                        and _class_lessons.class_id = _classes.class_id
-                                        and _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
-                                        and _teacher_subject.teacher_id = _teachers.teacher_id
-                                        and _teacher_subject.subject_id = _subjects.subject_id
-                                        and _teachers.user_id = _users.user_id
-                                        and _classes.class_id = " . $class_id . "
+                $query = "SELECT ".$prefix."_class_lessons.class_lesson_id, ".$prefix."_timetable.timetable_id, ".$prefix."_timetable.day, ".$prefix."_timetable.lesson_number, ".$prefix."_classes.name as class_name, ".$prefix."_classes.class_id, ".$prefix."_users.first_name, ".$prefix."_users.last_name, ".$prefix."_subjects.name as subject_name 
+                                        FROM ".$prefix."_timetable, ".$prefix."_classes, ".$prefix."_teacher_subject, ".$prefix."_teachers, ".$prefix."_subjects, ".$prefix."_users, ".$prefix."_class_lessons
+                                        WHERE ".$prefix."_timetable.class_lesson_id = ".$prefix."_class_lessons.class_lesson_id
+                                        and ".$prefix."_class_lessons.class_id = ".$prefix."_classes.class_id
+                                        and ".$prefix."_class_lessons.teacher_subject_id = ".$prefix."_teacher_subject.teacher_subject_id
+                                        and ".$prefix."_teacher_subject.teacher_id = ".$prefix."_teachers.teacher_id
+                                        and ".$prefix."_teacher_subject.subject_id = ".$prefix."_subjects.subject_id
+                                        and ".$prefix."_teachers.user_id = ".$prefix."_users.user_id
+                                        and ".$prefix."_classes.class_id = " . $class_id . "
                                         ORDER BY _timetable.lesson_number";
                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
                 $lessons = array();

@@ -29,13 +29,13 @@ require ('../config.php');
         $header_was_set = false;
         if($_SESSION['is_teacher']){
 
-            $query = "SELECT _subjects.name, _classes.name as 'class_name' FROM _class_lessons, _teacher_subject, _teachers, _subjects, _users, _classes
-            WHERE _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
-            and _teacher_subject.teacher_id = _teachers.teacher_id
-            and _teachers.user_id = _users.user_id
-            and _teacher_subject.subject_id = _subjects.subject_id
-            and _classes.class_id = _class_lessons.class_id
-            and _class_lessons.class_lesson_id = '".$class_lesson_id."';";
+            $query = "SELECT ".$prefix."_subjects.name, ".$prefix."_classes.name as 'class_name' FROM ".$prefix."_class_lessons, ".$prefix."_teacher_subject, ".$prefix."_teachers, ".$prefix."_subjects, ".$prefix."_users, ".$prefix."_classes
+            WHERE ".$prefix."_class_lessons.teacher_subject_id = ".$prefix."_teacher_subject.teacher_subject_id
+            and ".$prefix."_teacher_subject.teacher_id = ".$prefix."_teachers.teacher_id
+            and ".$prefix."_teachers.user_id = ".$prefix."_users.user_id
+            and ".$prefix."_teacher_subject.subject_id = ".$prefix."_subjects.subject_id
+            and ".$prefix."_classes.class_id = ".$prefix."_class_lessons.class_id
+            and ".$prefix."_class_lessons.class_lesson_id = '".$class_lesson_id."';";
             $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
 
             foreach ($result as $plik) {
@@ -51,12 +51,12 @@ require ('../config.php');
         if($_SESSION['is_student'] || $_SESSION['is_admin']){
 
             if($header_was_set == false){
-                $query = "SELECT _users.first_name, _users.last_name, _subjects.name FROM _class_lessons, _teacher_subject, _teachers, _subjects, _users
-                WHERE _class_lessons.teacher_subject_id = _teacher_subject.teacher_subject_id
-                and _teacher_subject.teacher_id = _teachers.teacher_id
-                and _teachers.user_id = _users.user_id
-                and _teacher_subject.subject_id = _subjects.subject_id
-                and _class_lessons.class_lesson_id = '".$class_lesson_id."';";
+                $query = "SELECT ".$prefix."_users.first_name, ".$prefix."_users.last_name, ".$prefix."_subjects.name FROM ".$prefix."_class_lessons, ".$prefix."_teacher_subject, ".$prefix."_teachers, ".$prefix."_subjects, ".$prefix."_users
+                WHERE ".$prefix."_class_lessons.teacher_subject_id = ".$prefix."_teacher_subject.teacher_subject_id
+                and ".$prefix."_teacher_subject.teacher_id =".$prefix." _teachers.teacher_id
+                and ".$prefix."_teachers.user_id = ".$prefix."_users.user_id
+                and ".$prefix."_teacher_subject.subject_id = ".$prefix."_subjects.subject_id
+                and ".$prefix."_class_lessons.class_lesson_id = '".$class_lesson_id."';";
                 $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
     
                 foreach ($result as $plik) {

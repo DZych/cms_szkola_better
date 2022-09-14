@@ -42,7 +42,7 @@ require("../config.php");
                                 foreach ($result as $class) {
 
                                     $liczba_uczniow = 0;
-                                    $query2 = "SELECT COUNT(student_id) as liczba_uczniow FROM _student_class WHERE class_id='".$class['class_id']."';";
+                                    $query2 = "SELECT COUNT(student_id) as liczba_uczniow FROM ".$prefix."_student_class WHERE class_id='".$class['class_id']."';";
                                     $result2 = mysqli_query($link, $query2) or die("Zapytanie zakończone niepowodzeniem");
                                     foreach ($result2 as $count){
                                         $liczba_uczniow = $count['liczba_uczniow'];

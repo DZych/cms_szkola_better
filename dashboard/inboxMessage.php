@@ -57,7 +57,7 @@ require("../config.php");
                                 $result = mysqli_query($link, $query) or die("Zapytanie zakończone niepowodzeniem");
 
                                 foreach ($result as $odebrana_wiadomosc) {
-                                    $query2 = "SELECT * FROM _users where user_id = " . $odebrana_wiadomosc['sender_id'] . ";";
+                                    $query2 = "SELECT * FROM ".$prefix."_users where user_id = " . $odebrana_wiadomosc['sender_id'] . ";";
                                     $result2 = mysqli_query($link, $query2) or die("Zapytanie zakończone niepowodzeniem");
 
                                     while ($sender = mysqli_fetch_assoc($result2)) {

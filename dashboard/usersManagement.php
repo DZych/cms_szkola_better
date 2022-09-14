@@ -93,9 +93,6 @@ require("../config.php");
                                             <input name="changeStatusSubmit" class="btn btn-info btn-sm ml-2" type="submit" value="Edytuj">
                                             </form>
 
-                                            <form action="userManagment\deleteAccount.php" method="POST" style="float:left" onSubmit="return confirm(\'Czy na pewno chcesz usunąć tego użytkownika?\')">
-                                            <input name="delete_user_id" type="hidden" value="' . $user['user_id'] . '">
-                                            <input name="deleteUserSubmit" class="btn btn-danger btn-sm ml-2" type="submit" value="Usuń">
                                             </form>
                                                 ';
                                     if ($user['active'] == 0) {
@@ -133,5 +130,10 @@ require("../config.php");
 
     include('includes/scripts.php');
     include('includes/footer.php');
+
+
+    // <form action="userManagment\deleteAccount.php" method="POST" style="float:left" onSubmit="return confirm(\'Czy na pewno chcesz usunąć tego użytkownika?\')">
+    // <input name="delete_user_id" type="hidden" value="' . $user['user_id'] . '">
+    // <input name="deleteUserSubmit" class="btn btn-danger btn-sm ml-2" type="submit" value="Usuń">
 
     ?>

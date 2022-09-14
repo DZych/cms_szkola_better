@@ -15,10 +15,10 @@
 
                     if($_SESSION['is_student']){
 
-                        $query = "SELECT * FROM _class_lessons, _class_lessons_files, _files
-                        WHERE _class_lessons.class_lesson_id = _class_lessons_files.class_lesson_id
-                        and _class_lessons_files.file_id = _files.file_id
-                        and _class_lessons_files.class_lesson_id = '".$class_lesson_id."';";
+                        $query = "SELECT * FROM ".$prefix."_class_lessons, ".$prefix."_class_lessons_files, ".$prefix."_files
+                        WHERE ".$prefix."_class_lessons.class_lesson_id = ".$prefix."_class_lessons_files.class_lesson_id
+                        and ".$prefix."_class_lessons_files.file_id = ".$prefix."_files.file_id
+                        and ".$prefix."_class_lessons_files.class_lesson_id = '".$class_lesson_id."';";
                         $result = mysqli_query($link, $query);
     
                         if (mysqli_num_rows($result) > 0) {
@@ -57,10 +57,10 @@
                     }
                     if($_SESSION['is_teacher'] || $_SESSION['is_admin']){
 
-                        $query = "SELECT * FROM _class_lessons, _class_lessons_files, _files
-                        WHERE _class_lessons.class_lesson_id = _class_lessons_files.class_lesson_id
-                        and _class_lessons_files.file_id = _files.file_id
-                        and _class_lessons_files.class_lesson_id = '".$class_lesson_id."';";
+                        $query = "SELECT * FROM ".$prefix."_class_lessons, ".$prefix."_class_lessons_files, ".$prefix."_files
+                        WHERE ".$prefix."_class_lessons.class_lesson_id = ".$prefix."_class_lessons_files.class_lesson_id
+                        and ".$prefix."_class_lessons_files.file_id = ".$prefix."_files.file_id
+                        and ".$prefix."_class_lessons_files.class_lesson_id = '".$class_lesson_id."';";
                         $result = mysqli_query($link, $query);
     
                         if (mysqli_num_rows($result) > 0) {

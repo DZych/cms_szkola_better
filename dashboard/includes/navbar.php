@@ -107,6 +107,19 @@
     }
     ?>
 
+<?php
+    if ($_SESSION['is_admin'] == true) {
+        echo '
+        <!-- Nav Item - Users -->
+        <li class="nav-item">
+            <a class="nav-link" href="subjectsManagement.php">
+                <i class="fas fa-fw fa-graduation-cap"></i>
+                <span>Przedmioty</span></a>
+        </li>
+        ';
+    }
+    ?>
+
     <?php
     if ($_SESSION['is_admin'] == true) {
         echo '

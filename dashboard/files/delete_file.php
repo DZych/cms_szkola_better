@@ -7,12 +7,12 @@
     include('../../config.php');
 
     // delete from _class_lesson_files table
-    $query = "DELETE FROM `_class_lessons_files` WHERE class_lesson_files_id = '".$class_lesson_files_id."';";
+    $query = "DELETE FROM ".$prefix."_class_lessons_files WHERE class_lesson_files_id = '".$class_lesson_files_id."';";
     $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
 
     // delete from _files table
     if($result == true){
-        $query = "DELETE FROM `_files` WHERE file_id = '".$file_id."';";
+        $query = "DELETE FROM ".$prefix."_files WHERE file_id = '".$file_id."';";
         $result = mysqli_query($link, $query) or die ("Zapytanie zakończone niepowodzeniem");
     }
 

@@ -30,7 +30,7 @@ require("../config.php");
 
                         while ($wiadomosc = mysqli_fetch_assoc($result)) {
 
-                            $query2 = "SELECT * FROM _users where user_id = " . $wiadomosc['receiver_id'] . ";";
+                            $query2 = "SELECT * FROM ".$prefix."_users where user_id = " . $wiadomosc['receiver_id'] . ";";
                             $result2 = mysqli_query($link, $query2) or die("Zapytanie zakończone niepowodzeniem");
 
                             while ($user = mysqli_fetch_assoc($result2)) {
@@ -58,7 +58,7 @@ require("../config.php");
 
                         while ($wiadomosc = mysqli_fetch_assoc($result)) {
 
-                            $query2 = "SELECT * FROM _users where user_id = " . $wiadomosc['sender_id'] . ";";
+                            $query2 = "SELECT * FROM ".$prefix."_users where user_id = " . $wiadomosc['sender_id'] . ";";
                             $result2 = mysqli_query($link, $query2) or die("Zapytanie zakończone niepowodzeniem");
 
                             while ($user = mysqli_fetch_assoc($result2)) {
