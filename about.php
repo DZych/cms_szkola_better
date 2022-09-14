@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php include_once("branding.php"); ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +11,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/about.css" rel="stylesheet">
 
-    <title></title>
+    <title><?php echo $pelna_nazwa_szkoly ?></title>
 </head>
 
 <body>
@@ -18,7 +20,7 @@
 
     <header class="masthead d-flex align-items-center">
         <div class="p-5 text-white lh-sm">
-            <p class="fs-1 fw-bold ">Nazwa naszej szkoły</p>
+            <p class="fs-1 fw-bold "><?php echo $pelna_nazwa_szkoly ?></p>
             <p class="fs-3">Miejsce w którym czujesz się bezpiecznie</p>
         </div>
     </header>

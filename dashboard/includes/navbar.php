@@ -1,12 +1,10 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+    <?php include_once("../branding.php");?>
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        <div class="sidebar-brand-icon">
-            <img src="../assets/img/logo.png" style="width: 40px;" />
-        </div>
-        <div class="sidebar-brand-text mx-1">ZSP 13</div>
+        <div class="sidebar-brand-text mx-1"><?php echo $skrocona_nazwa_szkoly;?></div>
     </a>
 
     <!-- Divider -->

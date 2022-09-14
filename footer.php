@@ -1,3 +1,5 @@
+<?php include_once("branding.php"); ?>
+
 <footer class="bg-primary text-white text-center text-lg-start mt-4">
   <!-- Grid container -->
   <div class="container p-4">
@@ -5,10 +7,10 @@
     <div class="row">
       <!--Grid column-->
       <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <h5 class="text-uppercase">Nasza szkoła</h5>
+        <h5 class="text-uppercase"><?php echo $skrocona_nazwa_szkoly ?></h5>
 
         <p>
-          ul.Warszawska 32, 00-234 Warszawa
+        <?php echo $adres_szkoly ?>
         </p>
       </div>
       <!--Grid column-->
@@ -19,10 +21,10 @@
 
         <ul class="list-unstyled mb-0">
           <li>
-            NaszaSzkoła@szkola.pl
+          <?php echo $pierwszy_mail ?>
           </li>
           <li>
-            NaszaSzkoła2@szkola.pl
+          <?php echo $drugi_mail ?>
           </li>
         </ul>
       </div>
@@ -34,10 +36,10 @@
 
         <ul class="list-unstyled mb-0">
           <li>
-            34 377 06 50
+          <?php echo $pierwszy_numer_tel ?>
           </li>
           <li>
-            543 234 543
+          <?php echo $drugi_numer_tel ?>
           </li>
         </ul>
       </div>
@@ -50,7 +52,7 @@
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2020 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/">NaszaSzkoła.com</a>
+    <a class="text-white" href="index.php"><?php echo $skrocona_nazwa_szkoly ?></a>
   </div>
   <!-- Copyright -->
 </footer>

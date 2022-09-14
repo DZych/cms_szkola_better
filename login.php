@@ -39,13 +39,6 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="haslo">
                 <label for="floatingPassword">Hasło</label>
               </div>
-
-              <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                <label class="form-check-label" for="rememberPasswordCheck">
-                  Zapamiętaj hasło
-                </label>
-              </div>
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold p-3 m-2" type="submit">Zaloguj się</button>
               </div>

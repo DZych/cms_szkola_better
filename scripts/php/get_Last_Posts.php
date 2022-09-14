@@ -43,6 +43,19 @@ while ($wynik = mysqli_fetch_assoc($result)) {
     </br>
     ';
   }
+  if(mysqli_num_rows($result) == 0){
+    echo '
+    <div class="row">
+        <div class=" text-center" style="height:400px">
+            <h2>Witaj!</h2>
+            <h3>Możesz dodać swoje newsy z panelu administratora!</h3>
+        </div>
+    </div>
+    </div>
+    </br>
+    </br>
+    ';
+  }
 
  echo "</div>";
  mysqli_close($link); 

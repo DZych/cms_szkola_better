@@ -53,12 +53,12 @@ include("includes/navbar.php");
     
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Nowe hasło</label>
-                                            <input class="form-control" id="inputOrgName" type="password" placeholder="Wprowadź hasło" value="" name="password1" required>
+                                            <input class="form-control" id="inputOrgName" type="password" placeholder="Wprowadź hasło" value="" name="password1" title="Hasło musi składać się z minimum 8 znaków w tym 1 duża litera, 1 liczba oraz 1 znak specjalny!" required="required" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,100}$">
                                         </div>
     
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Powtórz nowe hasło</label>
-                                            <input class="form-control" id="inputLocation" type="password" placeholder="Powtórz hasło" value="" name="password2" required>
+                                            <input class="form-control" id="inputLocation" type="password" placeholder="Powtórz hasło" value="" name="password2" title="Hasło musi składać się z minimum 8 znaków w tym 1 duża litera, 1 liczba oraz 1 znak specjalny!" required="required" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,100}$">
                                         </div>
                                     </div>
                                     <!-- Form Group (email address)-->                                
@@ -183,12 +183,12 @@ include("includes/navbar.php");
     
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Nowe hasło</label>
-                                            <input class="form-control" id="inputOrgName" type="password" placeholder="Wprowadź hasło" value="" name="password1">
+                                            <input class="form-control" id="inputOrgName" type="password" placeholder="Wprowadź hasło" value="" name="password1" title="Hasło musi składać się z minimum 8 znaków w tym 1 duża litera, 1 liczba oraz 1 znak specjalny!" required="required" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,100}$">
                                         </div>
     
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Powtórz nowe hasło</label>
-                                            <input class="form-control" id="inputLocation" type="password" placeholder="Powtórz hasło" value="" name="password2">
+                                            <input class="form-control" id="inputLocation" type="password" placeholder="Powtórz hasło" value="" name="password2" title="Hasło musi składać się z minimum 8 znaków w tym 1 duża litera, 1 liczba oraz 1 znak specjalny!" required="required" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,100}$">
                                         </div>
                                     </div>
                                     <!-- Form Group (email address)-->                                
@@ -245,7 +245,16 @@ if (isset($_SESSION['changepswd'])) {
             <strong>Podane hasła</strong> nie są prawdiłowe!
         </div>
         <script type="text/javascript">console.log("2")</script>';
-    } else {
+    }elseif ($_SESSION['changepswd'] == 4) {
+        echo '
+        <div class="alert alert-danger mt-2">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Podany adres email jest już przypisany do innego użytkownika. Poddaj inny email!</strong> 
+        </div>
+        <script type="text/javascript">console.log("2")</script>';
+    }
+    
+    else {
         echo '<script type="text/javascript">console.log("3")</script>';
     }
     $_SESSION['changepswd'] = 3;
